@@ -7,9 +7,8 @@ import java.util.List;
 public class Player {
 	
 	private List<Card> hand = new ArrayList<Card>();
-	private int money;
-	private int bet;
-	private int pot;
+	private double money;
+	private double bet;
 	
 	public Player(){
 		this.money = 1000;
@@ -33,11 +32,11 @@ public class Player {
 		return i;
 	}
 
-	public int getMoney() {
+	public double getMoney() {
 		return money;
 	}
 
-	public int getBet() {
+	public double getBet() {
 		return bet;
 	}
 
@@ -45,7 +44,7 @@ public class Player {
 		this.hand.add(card);
 	}
 
-	public void setMoney(int money) {
+	public void setMoney(double money) {
 		this.money += money;
 	}
 
@@ -53,18 +52,12 @@ public class Player {
 		this.bet = bet;
 	}
 	
-	public int getPot() {
-		return pot;
-	}
-
-	public void setPot(int pot) {
-		this.pot = pot;
-	}
+	
 
 	@Override
 	public String toString() {
 		return "Player [hand=" + hand + ", money=" + money + ", bet=" + bet
-				+ ", pot=" + pot + "]";
+				+ ", pot=" + "]";
 	}
 	
 	

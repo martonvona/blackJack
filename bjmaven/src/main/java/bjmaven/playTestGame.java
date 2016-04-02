@@ -22,12 +22,14 @@ public class playTestGame {
 
 	      while(!table.isPlayerDone()){
 	    	  
-	    	  if(table.hasBlackJack())
+	    	  if(table.hasBlackJackPlayer())
 	    		  table.setPlayerDone(true);
-	    	  if(table.hasBust())
+	    	  if(table.hasBustPlayer())
 	    		  table.setPlayerDone(true);
 	    	  
 	    	  table.playerOptions();
+	    	  
+	    	  //az option alapjan be keri az opciot
 	    	  
 	    	  String option = "Stand";
 	    	  
@@ -55,14 +57,13 @@ public class playTestGame {
 	    		  Table hand1 = new Table(playRound(table));
 	    		  Table hand2 = new Table(playRound(table)); 
 	    		  
-	    		  table.getPlayer().setMoney(hand1.getPlayer().getPot());
-	    		  table.getPlayer().setMoney(hand2.getPlayer().getPot());
+	    		  table.getPlayer().setMoney(hand1.countPot(hand1.getPlayer().getBet()));
+	    		  table.getPlayer().setMoney(hand2.countPot(hand2.getPlayer().getBet()));
 	    		  
 	    		  table.setSplit(true);
 	    		  table.setPlayerDone(true);
 	    		  
 	    		  break;
-
 	    	  
 	    	  } 
 	    	  
@@ -72,6 +73,7 @@ public class playTestGame {
 	    if(!table.isSplit()){
 	    	table.getHouse().play(table.getDeck());
 		    table.whoWin();
+		    table.getPlayer().setMoney(table.countPot(table.getPlayer().getBet()));
 	    }
 	    
 		

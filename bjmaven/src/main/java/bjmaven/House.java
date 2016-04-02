@@ -45,8 +45,11 @@ public class House {
 	
 	public int play(Deck deck){
 		
-		// lejatsza a jatekot 17 utan nem hit-elhet
-				return 1;
+		while(this.handSum()<17){
+			this.setHand(deck.getCard());
+		}
+		
+		return this.handSum();
 		
 	}
 	
