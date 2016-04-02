@@ -34,6 +34,9 @@ public class Table {
 	
 	public void deal(){
 		
+		house.clearHand();
+		player.clearHand();
+		
 		house.setHand(deck.getCard());
 	    player.setHand(deck.getCard());
 		house.setHand(deck.getCard());

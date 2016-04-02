@@ -14,7 +14,8 @@ public class playTestGame {
 	      table.deal();
 	      
 	      while(table.getPlayer().getMoney()>0)
-	    	 playRound(table);   
+	    	 playRound(table);
+	      
 	    	  
 	}
 	     

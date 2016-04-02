@@ -21,7 +21,10 @@ public class House {
 		
 		this.hand.add(card);
 	}
-
+	
+	public void clearHand(){
+		this.hand.clear();
+	}
 
 	public List<Card> getHand() {
 		return hand;

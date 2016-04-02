@@ -43,6 +43,10 @@ public class Player {
 	public void setHand(Card card) {
 		this.hand.add(card);
 	}
+	
+	public void clearHand(){
+		this.hand.clear();
+	}
 
 	public void setMoney(double money) {
 		this.money += money;
