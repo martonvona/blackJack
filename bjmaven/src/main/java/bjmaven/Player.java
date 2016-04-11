@@ -5,31 +5,34 @@ import java.util.List;
 
 
 public class Player {
-	
-	private List<Card> hand = new ArrayList<Card>();
+
+	private List<Hand> hands = new ArrayList<Hand>();
 	private double money;
 	private double bet;
-	
+
+
+
 	public Player(){
 		this.money = 1000;
+		hands.add(new Hand());
 	}
 
-	public List<Card> getHand() {
-		return hand;
+	public void addCardToHand(Card card, int handNumber){
+		hands.get(handNumber-1).addCard(card);
 	}
-	
-	public Card getHandSingle(int i) {
-		return hand.get(i-1);
+
+	public void splitHand(int i){
+
+		hands.add(hands.get(i-1));
+
 	}
-	
-	public int handSum(){
-		int i=0;
-		
-		for (Card card : hand) {
-			i += card.getValue();
-		}
-		
-		return i;
+
+	public int getHandsNumber(){
+		return hands.size();
+	}
+
+	public Hand getHand(int i){
+		return hands.get(i-1);
 	}
 
 	public double getMoney() {
@@ -40,13 +43,7 @@ public class Player {
 		return bet;
 	}
 
-	public void setHand(Card card) {
-		this.hand.add(card);
-	}
-	
-	public void clearHand(){
-		this.hand.clear();
-	}
+
 
 	public void setMoney(double money) {
 		this.money += money;
@@ -55,15 +52,9 @@ public class Player {
 	public void setBet(int bet) {
 		this.bet = bet;
 	}
-	
-	
 
-	@Override
-	public String toString() {
-		return "Player [hand=" + hand + ", money=" + money + ", bet=" + bet
-				+ ", pot=" + "]";
+	public void clearHand(){
+		hands.clear();
+		hands.add(new Hand());
 	}
-	
-	
-
 }

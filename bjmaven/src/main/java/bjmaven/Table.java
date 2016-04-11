@@ -1,7 +1,7 @@
 package bjmaven;
 
 public class Table {
-	
+
 	private Deck deck;
 	private Player player;
 	private House house;
@@ -10,7 +10,7 @@ public class Table {
 	private boolean insurance;
 	private boolean betDouble;
 	private boolean split;
-	
+
 	public Table(Deck deck, Player player, House house) {
 		this.deck = deck;
 		this.player = player;
@@ -20,7 +20,7 @@ public class Table {
 		this.insurance = false;
 		this.betDouble = false;
 	}
-	
+
 	public Table(Table table) {
 		this.deck = table.getDeck();
 		this.player = table.getPlayer();
@@ -30,116 +30,120 @@ public class Table {
 		this.insurance = false;
 		this.betDouble = false;
 	}
-	
-	
+
+
 	public void deal(){
-		
+
 		house.clearHand();
 		player.clearHand();
-		
-		house.setHand(deck.getCard());
-	    player.setHand(deck.getCard());
-		house.setHand(deck.getCard());
-		player.setHand(deck.getCard());
 
+		house.addCardToHand(deck.getCard());
+	    player.addCardToHand(deck.getCard(), 1);
+	    house.addCardToHand(deck.getCard());
+	    player.addCardToHand(deck.getCard(), 1);
 	}
-	
+
 	public boolean hasBlackJackPlayer(){
-		
-		if((player.getHandSingle(1).getValue() + player.getHandSingle(2).getValue()) == 21)
+
+		if((player.getHand(1).getCard(1).getValue() + player.getHand(1).getCard(2).getValue()) == 21)
 			return true;
 		else
 			return false;
-		
-	}
-	
-	public boolean hasBlackJackHouse(){
-		
-		if(house.getHandSingle(1).getValue()+house.getHandSingle(2).getValue() == 21)
-			return true;
-		else
-			return false;
-		
-	}
-	public boolean hasBustPlayer(){
-		if(player.handSum() > 21)
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean hasBustHouse(){
-		if(house.handSum() > 21)
-			return true;
-		else
-			return false;
-	}
-	
-	public String[] playerOptions(){
-		
-		if(house.getHandSingle(1).getName().equals("A") && player.getHand().size()==2)
-			return new String[] {"Insurance","Hit","Stand","Surrender"};
-		else if(player.getHandSingle(1).getName().equals(player.getHandSingle(2).getName()) && player.getHand().size() == 2)
-			return new String[] {"Split","Hit","Double","Stand","Surrender"};
-		else
-			return new String[] {"Hit","Double","Stand","Surrender"};
-		
-		
+
 	}
 
-	public double countPot(double bet){
-		
+	public boolean hasBlackJackHouse(){
+
+		if((house.getHand().getCard(1).getValue() + house.getHand().getCard(2).getValue()) == 21)
+			return true;
+		else
+			return false;
+
+	}
+	public boolean hasBustPlayer(int i){
+		if(player.getHand(i).handSum() > 21)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean hasBustHouse(){
+		if(house.getHand().handSum() > 21)
+			return true;
+		else
+			return false;
+	}
+
+	public String[] playerOptions(int i){
+
+		String[] options  = {"Hit","Stand","Surrender","Double"," ", " "};
+
+		if(house.getHand().getCard(1).getName().equals("A") && player.getHand(i).cardsNum() == 2){
+			options[4] = "Insurance";
+		}
+
+		if(player.getHand(i).getCard(1).getName()
+				.equals(player.getHand(i).getCard(2).getName()) && player.getHand(i).cardsNum() == 2 ){
+			options[5] = "split";
+		}
+
+		return options;
+
+	}
+
+	public double countPot(double bet, int playerHandNumber){
+
 		double reward = 0;
-		
+
 		if(this.hasBlackJackPlayer() == true ){
 			reward = bet*3/2;
-		} else if(this.hasBustPlayer() == true){
+		} else if(this.hasBustPlayer(playerHandNumber) == true){
 			reward = -bet;
 		} else if(this.surrender == true){
 			reward = -bet/2;
-		} else if(this.insurance == true && !this.hasBlackJackHouse() && this.whoWin().equals("player")){
+		} else if(this.insurance == true && !this.hasBlackJackHouse() && this.whoWin(playerHandNumber).equals("player")){
 			reward = bet-bet/2;
-		} else if(this.insurance == true && !this.hasBlackJackHouse() && this.whoWin().equals("house")){
+		} else if(this.insurance == true && !this.hasBlackJackHouse() && this.whoWin(playerHandNumber).equals("house")){
 			reward = -(bet + bet/2);
-		} else if(this.insurance == true && !this.hasBlackJackHouse() && this.whoWin().equals("player") && this.betDouble == true){
+		} else if(this.insurance == true && !this.hasBlackJackHouse() && this.whoWin(playerHandNumber).equals("player") && this.betDouble == true){
 			reward = bet*2 -bet;
-		} else if(this.insurance == true && !this.hasBlackJackHouse() && this.whoWin().equals("house") && this.betDouble == true){
+		} else if(this.insurance == true && !this.hasBlackJackHouse() && this.whoWin(playerHandNumber).equals("house") && this.betDouble == true){
 			reward = -bet*3;
-		} else if(this.betDouble == true && this.whoWin().equals("player")){
+		} else if(this.betDouble == true && this.whoWin(playerHandNumber).equals("player")){
 			reward = bet*2;
-		} else if(this.betDouble == true && this.whoWin().equals("house")){
+		} else if(this.betDouble == true && this.whoWin(playerHandNumber).equals("house")){
 			reward = -bet*2;
-		} else if(this.whoWin().equals("player")){
+		} else if(this.whoWin(playerHandNumber).equals("player")){
 			reward = bet;
-		} else if(this.whoWin().equals("house")){
+		} else if(this.whoWin(playerHandNumber).equals("house")){
 			reward = -bet;
 		}
-		
+
 		return reward;
 	}
-	
-	public String whoWin(){
-		
+
+	public String whoWin(int playerHandnumber){
+
 		String winner = "who Win";
-		
+
 		if(hasBlackJackPlayer() && !hasBlackJackHouse()){
 			winner = "player";
 		} else if(hasBlackJackHouse() && hasBlackJackPlayer()){
 			winner = "push";
-		} else if(hasBustPlayer()){
+		} else if(hasBustPlayer(playerHandnumber)){
 			winner = "house";
 		} else if(hasBustHouse()){
 			winner = "player";
-		} else if(player.handSum() > house.handSum()){
+		} else if(player.getHand(playerHandnumber).handSum() > house.getHand().handSum()){
 			winner = "player";
-		} else if(player.handSum() == house.handSum()){
+		} else if(player.getHand(playerHandnumber).handSum() == house.getHand().handSum()){
 			winner = "push";
-		} else if(player.handSum() < house.handSum())
+		} else if(player.getHand(playerHandnumber).handSum() < house.getHand().handSum())
 			winner = "house";
-		
+
 		return winner;
 	}
-	
+
 	public Deck getDeck() {
 		return deck;
 	}
@@ -204,7 +208,11 @@ public class Table {
 	public void setSplit(boolean split) {
 		this.split = split;
 	}
-	
+
+	public void newDeck(){
+		this.deck = new Deck();
+	}
+
 	@Override
 	public String toString() {
 		return "Table [deck=" + deck + ", player=" + player.toString() + ", house="

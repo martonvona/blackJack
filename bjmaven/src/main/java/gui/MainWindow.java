@@ -1,25 +1,53 @@
-package bjmaven;
+package gui;
 
-import gui.TableDrawer;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import bjmaven.Card;
+import bjmaven.Deck;
+import bjmaven.House;
+import bjmaven.Player;
+import bjmaven.Table;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
-public class playTestGame {
+public class MainWindow extends Application {
 
 	public static void main(String[] args) {
+		Application.launch(args);
+	}
+
+	@Override
+	public void start(Stage stage) throws Exception {
 
 		Deck deck = new Deck();
 		Player player = new Player();
 		House house = new House();
 		Table table = new Table(deck, player, house);
 
+		TableDrawer tableDrawer = new TableDrawer(stage);
+		tableDrawer.initWindow();
+
 		while (table.getPlayer().getMoney() > 0) {
 
 			table.newDeck();
 
-			table.getPlayer().setBet(10);
+			table.getPlayer().setBet(100);
 
 			table.deal();
-			
-			
+
+			tableDrawer.drawHouseHideHands(table);
+			tableDrawer.drawPlayerHands(table);
 
 			for (int i = 1; i <= table.getPlayer().getHandsNumber();) {
 
@@ -37,7 +65,10 @@ public class playTestGame {
 
 			}
 
+
+
 			table.getHouse().play(table.getDeck());
+			tableDrawer.drawHouseOpenHands(table);
 
 			for (int i = 1; i <= table.getPlayer().getHandsNumber(); i++) {
 				table.whoWin(i);
@@ -47,7 +78,6 @@ public class playTestGame {
 			table.getPlayer().setBet(0);
 
 		}
-
 	}
 
 	static void playRound(Table table, int playerHandNumber) {
@@ -70,6 +100,7 @@ public class playTestGame {
 				break;
 			case "Hit":
 				table.getPlayer().addCardToHand(table.getDeck().getCard(), playerHandNumber);
+				
 				break;
 			case "Surrender":
 				table.setSurrender(true);

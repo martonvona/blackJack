@@ -1,60 +1,38 @@
 package bjmaven;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class House {
 
-	private List<Card> hand = new ArrayList<Card>();
-	
-	public House(List<Card> hand) {
-		this.hand = hand;
-	}
-	
+	private Hand hand;
+
 
 	public House() {
-		
-	}
-	
-	
-	public void setHand(Card card) {
-		
-		this.hand.add(card);
-	}
-	
-	public void clearHand(){
-		this.hand.clear();
+		hand = new Hand();
 	}
 
-	public List<Card> getHand() {
+
+	public void addCardToHand(Card card) {
+		hand.addCard(card);
+	}
+
+	public void clearHand(){
+		hand.clearHand();
+	}
+
+	public Hand  getHand(){
 		return hand;
 	}
-	
-	public Card getHandSingle(int i) {
-		return hand.get(i-1);
-	}
-	
-	public int handSum(){
-		int i=0;
-		
-		for (Card card : hand) {
-			i += card.getValue();
-		}
-		
-		return i;
-	}
-	
-	
-	
+
+
 	public int play(Deck deck){
-		
-		while(this.handSum()<17){
-			this.setHand(deck.getCard());
+
+		while(this.hand.handSum()<17){
+			this.addCardToHand(deck.getCard());
 		}
-		
-		return this.handSum();
-		
+
+		return this.hand.handSum();
+
 	}
-	
-	
+
+
 }
