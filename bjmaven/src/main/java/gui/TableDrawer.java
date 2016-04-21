@@ -7,6 +7,8 @@ import bjmaven.Card;
 import bjmaven.House;
 import bjmaven.Player;
 import bjmaven.Table;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -31,15 +33,8 @@ public class TableDrawer {
 
  		 borderPane.setPrefSize(800,400);
 
- 	   	 Button btnStand = new Button("Stand");
-		 Button btnHit = new Button("Hit");
-		 Button btnSurrender = new Button("Surrender");
-		 Button btnDouble = new Button("Double");
-		 Button btnInsurrance = new Button("Insurrance");
-		 Button btnSplit = new Button("Split");
-		 VBox buttons = new VBox(6);
-		 buttons.getChildren().addAll(btnStand,btnHit,btnSurrender,btnDouble,btnInsurrance,btnSplit);
-		 borderPane.setRight(buttons);
+
+		 //borderPane.setRight(buttons);
 
 		 GridPane gridPane = new GridPane();
 
@@ -128,7 +123,27 @@ public class TableDrawer {
 	}
 
 
+	VBox setButton(){
 
+		 Button btnStand = new Button("Stand");
+		 Button btnHit = new Button("Hit");
+		 Button btnSurrender = new Button("Surrender");
+		 Button btnDouble = new Button("Double");
+		 Button btnInsurrance = new Button("Insurrance");
+		 Button btnSplit = new Button("Split");
+
+		 btnStand.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+
+			}
+		});
+
+		 VBox buttons = new VBox(6);
+		 buttons.getChildren().addAll(btnStand,btnHit,btnSurrender,btnDouble,btnInsurrance,btnSplit);
+
+		 return buttons;
+	}
 
 
 	ImageView cardLoader(Card card){

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.fxmlController">
+   <right>
+      <VBox fx:id="status" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="BOTTOM_CENTER">
+         <children>
+            <Text fx:id="textOptions" strokeType="OUTSIDE" strokeWidth="0.0" text="OPTIONS">
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Text>
+            <Button fx:id="btnHit" maxWidth="80.0" minWidth="0.0" mnemonicParsing="false" text="Hit">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnStand" minWidth="80.0" mnemonicParsing="false" text="Stand">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnDouble" minWidth="80.0" mnemonicParsing="false" text="Double">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnSur" minWidth="80.0" mnemonicParsing="false" text="Surrender">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnSplit" minWidth="80.0" mnemonicParsing="false" text="Split">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnIns" minWidth="80.0" mnemonicParsing="false" text="Insurrance" />
+            <Text fx:id="textBet" strokeType="OUTSIDE" strokeWidth="0.0" text="BET">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Text>
+            <TextField fx:id="inputBet" maxWidth="80.0" minWidth="0.0" />
+            <Button fx:id="btnPlay" maxWidth="80.0" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" onAction="#playAction" text="PLAY">
+               <VBox.margin>
+                  <Insets top="2.0" />
+               </VBox.margin>
+            </Button>
+            <Text fx:id="textMoney" strokeType="OUTSIDE" strokeWidth="0.0" text="MONEY">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Text>
+            <Text fx:id="textDollar" strokeType="OUTSIDE" strokeWidth="0.0" text="2000 $">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+   <top>
+      <VBox fx:id="menuBox" prefHeight="24.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar fx:id="menubar">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <GridPane fx:id="gridPane" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="156.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="154.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="87.0" minHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="188.0" minHeight="10.0" prefHeight="159.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="191.0" minHeight="8.0" prefHeight="26.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="155.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text fx:id="textHouse" strokeType="OUTSIDE" strokeWidth="0.0" text="HOUSE" GridPane.columnIndex="1" />
+            <Text fx:id="textPlayer" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYER" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Pane fx:id="pHand01" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </Pane>
+            <Pane fx:id="pHand02" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Pane fx:id="houseHand" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </GridPane>
+   </center>
+</BorderPane>

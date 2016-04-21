@@ -11,10 +11,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import bjmaven.Card;
 import bjmaven.Deck;
+import bjmaven.GameController;
 import bjmaven.House;
 import bjmaven.Player;
 import bjmaven.Table;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -30,26 +33,24 @@ public class MainWindow extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		Deck deck = new Deck();
-		Player player = new Player();
-		House house = new House();
-		Table table = new Table(deck, player, house);
+
+		GameController gameController = new GameController();
 
 		TableDrawer tableDrawer = new TableDrawer(stage);
 		tableDrawer.initWindow();
 
-		while (table.getPlayer().getMoney() > 0) {
+		while (gameController.playerHasMoney()) {
 
-			table.newDeck();
+			gameController.shuffleDeck();
 
-			table.getPlayer().setBet(100);
+			//table.getPlayer().setBet(100);
 
-			table.deal();
+			gameController.deal();
 
-			tableDrawer.drawHouseHideHands(table);
-			tableDrawer.drawPlayerHands(table);
+			//tableDrawer.drawHouseHideHands(table);
+			//tableDrawer.drawPlayerHands(table);
 
-			for (int i = 1; i <= table.getPlayer().getHandsNumber();) {
+			for (int i = 1; i <= gameController.playerHandsNumber();) {
 
 				playRound(table, i);
 
@@ -100,7 +101,7 @@ public class MainWindow extends Application {
 				break;
 			case "Hit":
 				table.getPlayer().addCardToHand(table.getDeck().getCard(), playerHandNumber);
-				
+
 				break;
 			case "Surrender":
 				table.setSurrender(true);
@@ -128,5 +129,35 @@ public class MainWindow extends Application {
 		}
 
 	}
+
+
+
+///////////////////GUI/////////////////////
+
+	VBox setButton(){
+
+		 Button btnStand = new Button("Stand");
+		 Button btnHit = new Button("Hit");
+		 Button btnSurrender = new Button("Surrender");
+		 Button btnDouble = new Button("Double");
+		 Button btnInsurrance = new Button("Insurrance");
+		 Button btnSplit = new Button("Split");
+
+		 btnStand.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+
+			}
+		});
+
+		 VBox buttons = new VBox(6);
+		 buttons.getChildren().addAll(btnStand,btnHit,btnSurrender,btnDouble,btnInsurrance,btnSplit);
+
+		 return buttons;
+	}
+
+
+
+
 
 }
