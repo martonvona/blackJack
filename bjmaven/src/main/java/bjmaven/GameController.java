@@ -4,7 +4,6 @@ public class GameController {
 
 	private Table table;
 
-	private boolean playerDone;
 	private boolean surrender;
 	private boolean insurance;
 	private boolean betDouble;
@@ -16,7 +15,6 @@ public class GameController {
 		House house = new House();
 		this.table= new Table(deck, player, house);
 
-		this.playerDone = false;
 		this.surrender = false;
 		this.insurance = false;
 		this.betDouble = false;
@@ -33,6 +31,8 @@ public class GameController {
 	}
 
 	public void deal(){
+
+		this.shuffleDeck();
 
 		table.getHouse().clearHand();
 		table.getPlayer().clearHand();
@@ -156,14 +156,6 @@ public class GameController {
 			return false;
 	}
 
-	public void setPlayerDone(boolean playerDone) {
-		this.playerDone = playerDone;
-	}
-
-	public boolean isPlayerDone() {
-		return playerDone;
-	}
-
 	public boolean isSurrender() {
 		return surrender;
 	}
@@ -199,4 +191,62 @@ public class GameController {
 	public Table getTable(){
 		return table;
 	}
+
+	public void hit(int playerHand){
+		this.getTable().getPlayer().getHand(playerHand).addCard(this.getTable().getDeck().getCard());
+	}
+
+	public void stand(int playerHand){
+		this.getTable().getPlayer().getHand(playerHand).setHandDone(true);
+	}
+
+
+
+	public boolean canPlayerIns(){
+		if(this.getTable().getHouse().getHand().getCard(1).getName().equals("A"))
+			return true;
+		else
+			return false;
+	}
+
+	public boolean canPlayerSplit(int playerHand){
+		if (this.getTable().getPlayer().getHand(playerHand).getCard(1).getName().equals(
+				this.getTable().getPlayer().getHand(playerHand).getCard(2).getName()))
+			return true;
+		else
+			return false;
+	}
+
+	public boolean hasNextHand(int playerHand){
+		if(playerHand < this.getTable().getPlayer().getHandsNumber()){
+			System.out.println("playerHand: "+playerHand+"handsNumber: "+this.getTable().getPlayer().getHandsNumber() );
+
+			return true;
+			}
+		else{
+			System.out.println("playerHand: "+playerHand+"handsNumber: "+this.getTable().getPlayer().getHandsNumber() );
+			return false;
+			}
+	}
+
+	public void split(int playerHand){
+
+		this.getTable().getPlayer().addHand(new Hand());
+
+		this.getTable().getPlayer().getHand(playerHand+1).
+			addCard(this.getTable().getPlayer().getHand(playerHand).getCard(2));
+
+		this.getTable().getPlayer().getHand(playerHand+1)
+			.addCard(this.getTable().getDeck().getCard());
+
+
+		this.getTable().getPlayer().getHand(playerHand).
+			changeCard(2, this.getTable().getDeck().getCard() );
+
+
+
+
+
+	}
+
 }

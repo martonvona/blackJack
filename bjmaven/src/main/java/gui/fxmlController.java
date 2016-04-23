@@ -1,5 +1,8 @@
 package gui;
 
+import com.sun.corba.se.impl.encoding.CodeSetConversion.BTCConverter;
+
+import bjmaven.Card;
 import bjmaven.GameController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,67 +15,211 @@ import javafx.scene.layout.Pane;
 public class fxmlController {
 
 	static GameController gc = new GameController();
+	private HandDrawer hd = new HandDrawer();
 
 	@FXML
 	private Button btnPlay;
 
 	@FXML
+	private Button btnStand;
+
+	@FXML
+	private Button btnHit;
+
+	@FXML
 	private Pane houseHand;
+
+	@FXML
+	private Button btnDouble;
+
+	@FXML
+	private Button btnSur;
+
+	@FXML
+	private Button btnSplit;
+
+	@FXML
+	private Button btnIns;
 
 	@FXML
 	private Pane pHand01;
 
 	@FXML
+	private Pane pHand02;
+
+	@FXML
 	protected void playAction(ActionEvent event) {
+
+		houseHand.getChildren().clear();
+		pHand01.getChildren().clear();
+
 		gc.deal();
 
-		String cardName = gc.getTable().getHouse().getHand().getCard(1).getColor()+"_"+
-		gc.getTable().getHouse().getHand().getCard(1).getName();
+		btnHit.setDisable(false);
+		btnStand.setDisable(false);
+		btnDouble.setDisable(false);
+		if(gc.canPlayerIns())
+			btnIns.setDisable(false);
+		else
+			btnIns.setDisable(true);
+		if(gc.canPlayerSplit(1))
+			btnSplit.setDisable(false);
+		else
+			btnSplit.setDisable(false);
+		btnSur.setDisable(false);
 
 
-		Image image = new Image("file:src/main/resources/images/"+cardName+".png");
-    	ImageView imageView = new ImageView();
-    	imageView.setImage(image);
-    	imageView.setFitHeight(113);
-    	imageView.setFitHeight(86);
-    	imageView.setPickOnBounds(true);
-    	imageView.setPreserveRatio(true);
-    	houseHand.getChildren().add(imageView);
+		houseHand.getChildren().add(hd.drawHideHand(gc.getTable().getHouse().getHand()));
+		pHand01.getChildren().add(hd.drawOpenHand(gc.getTable().getPlayer().getHand(1)));
 
-		Image image2 = new Image("file:src/main/resources/images/back.png");
-    	ImageView imageView2 = new ImageView();
-    	imageView2.setImage(image2);
-    	imageView2.setFitHeight(113);
-    	imageView2.setFitHeight(86);
-    	imageView2.setPickOnBounds(true);
-    	imageView2.setPreserveRatio(true);
-    	imageView2.setLayoutX(20);
-    	houseHand.getChildren().add(imageView2);
+	}
 
-    	cardName = gc.getTable().getPlayer().getHand(1).getCard(1).getColor()+"_"+
-    			gc.getTable().getPlayer().getHand(1).getCard(1).getName();
+	@FXML
+	protected void hit(ActionEvent event){
 
-    	Image image3 = new Image("file:src/main/resources/images/"+cardName+".png");
-    	ImageView imageView3 = new ImageView();
-    	imageView3.setImage(image3);
-    	imageView3.setFitHeight(113);
-    	imageView3.setFitHeight(86);
-    	imageView3.setPickOnBounds(true);
-    	imageView3.setPreserveRatio(true);
-    	pHand01.getChildren().add(imageView3);
+		for (int playerHand = 1; playerHand <= gc.getTable().getPlayer().getHandsNumber(); playerHand++) {
 
-    	cardName = gc.getTable().getPlayer().getHand(1).getCard(2).getColor()+"_"+
-    			gc.getTable().getPlayer().getHand(1).getCard(2).getName();
+			if(gc.getTable().getPlayer().getHand(playerHand).isHandDone() != true){
 
-    	Image image4 = new Image("file:src/main/resources/images/"+cardName+".png");
-    	ImageView imageView4 = new ImageView();
-    	imageView4.setImage(image4);
-    	imageView4.setFitHeight(113);
-    	imageView4.setFitHeight(86);
-    	imageView4.setPickOnBounds(true);
-    	imageView4.setPreserveRatio(true);
-    	imageView4.setLayoutX(20);
-    	pHand01.getChildren().add(imageView4);
-    }
+				gc.hit(playerHand);
 
+				pHand01.getChildren().add(hd.drawOpenHand(gc.getTable().getPlayer().getHand(playerHand)));
+
+				if(gc.hasBustPlayer(playerHand) && gc.hasNextHand(playerHand)) {
+
+					gc.getTable().getPlayer().getHand(playerHand).setHandDone(true);
+
+					if(gc.canPlayerIns())
+						btnIns.setDisable(false);
+					else
+						btnIns.setDisable(true);
+
+					if(gc.canPlayerSplit(playerHand++))
+						btnSplit.setDisable(false);
+					else
+						btnSplit.setDisable(true);
+
+				} else if(gc.hasBustPlayer(playerHand)){
+
+					btnHit.setDisable(true);
+					btnStand.setDisable(true);
+					btnDouble.setDisable(true);
+					btnIns.setDisable(true);
+					btnSplit.setDisable(true);
+					btnSur.setDisable(true);
+
+					houseHand.getChildren().add(hd.drawOpenHand(gc.getTable().getHouse().getHand()));
+					System.out.println(gc.whoWin(playerHand));
+
+				} else {
+
+					btnDouble.setDisable(true);
+					btnSplit.setDisable(true);
+				}
+			}
+		}
+
+	}
+
+	@FXML
+	protected void stand(){
+		for (int playerHand = 1; playerHand <= gc.getTable().getPlayer().getHandsNumber(); playerHand++) {
+			if(gc.getTable().getPlayer().getHand(playerHand).isHandDone() != true){
+
+				gc.stand(playerHand);
+
+
+				if(!gc.hasNextHand(playerHand)) {
+					btnHit.setDisable(true);
+					btnStand.setDisable(true);
+					btnDouble.setDisable(true);
+					btnIns.setDisable(true);
+					btnSplit.setDisable(true);
+					btnSur.setDisable(true);
+
+					houseHand.getChildren().add(hd.drawOpenHand(gc.getTable().getHouse().getHand()));
+					System.out.println(gc.whoWin(playerHand));
+					System.out.println("ez futott le?");
+
+
+				} else {
+
+					btnHit.setDisable(false);
+					btnStand.setDisable(false);
+					btnDouble.setDisable(false);
+					if(gc.canPlayerIns())
+						btnIns.setDisable(false);
+					else
+						btnIns.setDisable(true);
+					if(gc.canPlayerSplit(1))
+						btnSplit.setDisable(false);
+					else
+						btnSplit.setDisable(true);
+					btnSur.setDisable(false);
+
+				}
+			}
+		}
+
+
+	}
+
+	@FXML
+	protected void doubleBet(){
+		for (int playerHand = 1; playerHand <= gc.getTable().getPlayer().getHandsNumber(); playerHand++) {
+			if(gc.getTable().getPlayer().getHand(playerHand).isHandDone() != true){
+
+				gc.hit(playerHand);
+				pHand01.getChildren().add(hd.drawOpenHand(gc.getTable().getPlayer().getHand(playerHand)));
+
+				if(!gc.hasNextHand(playerHand)) {
+					btnHit.setDisable(true);
+					btnStand.setDisable(true);
+					btnDouble.setDisable(true);
+					btnIns.setDisable(true);
+					btnSplit.setDisable(true);
+					btnSur.setDisable(true);
+
+					houseHand.getChildren().add(hd.drawOpenHand(gc.getTable().getHouse().getHand()));
+					System.out.println(gc.whoWin(playerHand));
+
+
+				} else {
+
+					btnHit.setDisable(false);
+					btnStand.setDisable(false);
+					btnDouble.setDisable(false);
+					if(gc.canPlayerIns())
+						btnIns.setDisable(false);
+					else
+						btnIns.setDisable(true);
+					if(gc.canPlayerSplit(1))
+						btnSplit.setDisable(false);
+					else
+						btnSplit.setDisable(true);
+					btnSur.setDisable(false);
+
+				}
+			}
+		}
+
+
+	}
+
+	@FXML
+	protected void split(){
+		for (int playerHand = 1; playerHand <= gc.getTable().getPlayer().getHandsNumber(); playerHand++) {
+			if(gc.getTable().getPlayer().getHand(playerHand).isHandDone() != true){
+
+				gc.split(playerHand);
+				pHand02.getChildren().add(hd.drawOpenHand(gc.getTable().getPlayer().getHand(playerHand+1)));
+				pHand01.getChildren().add(hd.drawOpenHand(gc.getTable().getPlayer().getHand(1)));
+				break;
+			}
+
+	}
+
+
+
+}
 }

@@ -21,10 +21,8 @@ public class Player {
 		hands.get(handNumber-1).addCard(card);
 	}
 
-	public void splitHand(int i){
-
-		hands.add(hands.get(i-1));
-
+	public void addHand(Hand hand){
+		this.hands.add(hand);
 	}
 
 	public int getHandsNumber(){
