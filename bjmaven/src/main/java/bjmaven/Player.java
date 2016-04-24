@@ -47,7 +47,7 @@ public class Player {
 		this.money += money;
 	}
 
-	public void setBet(int bet) {
+	public void setBet(double bet) {
 		this.bet = bet;
 	}
 

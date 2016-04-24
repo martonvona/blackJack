@@ -6,11 +6,15 @@ import java.util.List;
 public class Hand {
 
 	List<Card> cards;
-	boolean handDone;
+	private boolean surrender;
+	private boolean insurance;
+	private boolean betDouble;
 
 	public Hand(){
-		cards = new ArrayList<Card>();
-		handDone = false;
+		this.cards = new ArrayList<Card>();
+		this.betDouble = false;
+		this.insurance = false;
+		this.surrender = false;
 	}
 
 	public int handSum(){
@@ -34,6 +38,9 @@ public class Hand {
 
 	public void clearHand(){
 		this.cards.clear();
+		this.insurance = false;
+		this.surrender = false;
+		this.betDouble = false;
 	}
 
 	public int cardsNum(){
@@ -44,16 +51,35 @@ public class Hand {
 		this.cards.set(index-1, card);
 	}
 
-	public void setHandDone(boolean handDone) {
-		this.handDone = handDone;
-	}
-
-	public boolean isHandDone(){
-		return this.handDone;
-	}
 
 	public List<Card> getCards() {
 		return cards;
 	}
+
+	public boolean isSurrender() {
+		return surrender;
+	}
+
+	public boolean isInsurance() {
+		return insurance;
+	}
+
+	public boolean isBetDouble() {
+		return betDouble;
+	}
+
+	public void setSurrender(boolean surrender) {
+		this.surrender = surrender;
+	}
+
+	public void setInsurance(boolean insurance) {
+		this.insurance = insurance;
+	}
+
+	public void setBetDouble(boolean betDouble) {
+		this.betDouble = betDouble;
+	}
+
+
 
 }
