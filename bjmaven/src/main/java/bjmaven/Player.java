@@ -13,7 +13,6 @@ public class Player {
 
 
 	public Player(){
-		this.money = 1000;
 		hands.add(new Hand());
 	}
 

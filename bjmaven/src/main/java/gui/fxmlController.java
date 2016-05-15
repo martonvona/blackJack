@@ -1,14 +1,26 @@
 package gui;
 
+import java.io.IOException;
+import java.sql.Connection;
+
 import bjmaven.GameController;
+import dao.UserHandler;
+import dao.UserLoginDAOimpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class FxmlController {
 
@@ -16,7 +28,17 @@ public class FxmlController {
 	static int handIndex;
 	private HandDrawer hd = new HandDrawer();
 
+	public FxmlController() {
+		gc.setPlayerMoney(UserHandler.getUser().getMoney());
+	}
 
+	@FXML
+    public void initialize(){
+        updateMoney(UserHandler.getUser().getMoney());
+    }
+
+	@FXML
+	private MenuBar menubar;
 
 	@FXML
 	private Button btnPlay;
@@ -117,19 +139,19 @@ public class FxmlController {
 		}else{
 
 
-		btnHit.setDisable(false);
-		btnStand.setDisable(false);
-		btnDouble.setDisable(false);
-		if(gc.canPlayerIns())
-			btnIns.setDisable(false);
-		else
-			btnIns.setDisable(true);
-		if(gc.canPlayerSplit(1))
-			btnSplit.setDisable(false);
-		else
-			btnSplit.setDisable(true);
-		btnSur.setDisable(false);
-		btnPlay.setDisable(true);
+			btnHit.setDisable(false);
+			btnStand.setDisable(false);
+			btnDouble.setDisable(false);
+			if(gc.canPlayerIns())
+				btnIns.setDisable(false);
+			else
+				btnIns.setDisable(true);
+			if(gc.canPlayerSplit(1))
+				btnSplit.setDisable(false);
+			else
+				btnSplit.setDisable(true);
+			btnSur.setDisable(false);
+			btnPlay.setDisable(true);
 		}
 
 		houseHand.getChildren().add(hd.drawHideHand(gc.getTable().getHouse().getHand()));
@@ -141,54 +163,54 @@ public class FxmlController {
 	@FXML
 	protected void hit(ActionEvent event){
 
-				gc.hit(handIndex);
+		gc.hit(handIndex);
 
-				drawHand(handIndex);
+		drawHand(handIndex);
 
-				if(gc.hasBustPlayer(handIndex) && gc.hasNextHand(handIndex)) {
+		if(gc.hasBustPlayer(handIndex) && gc.hasNextHand(handIndex)) {
 
-					updateHandStatus(handIndex);
-					handIndex++;
-					colorStatus(handIndex);
-
-
-					if(gc.canPlayerIns())
-						btnIns.setDisable(false);
-					else
-						btnIns.setDisable(true);
-
-					if(gc.canPlayerSplit(handIndex))
-						btnSplit.setDisable(false);
-					else
-						btnSplit.setDisable(true);
+			updateHandStatus(handIndex);
+			handIndex++;
+			colorStatus(handIndex);
 
 
+			if(gc.canPlayerIns())
+				btnIns.setDisable(false);
+			else
+				btnIns.setDisable(true);
 
-				} else if(gc.hasBustPlayer(handIndex)){
+			if(gc.canPlayerSplit(handIndex))
+				btnSplit.setDisable(false);
+			else
+				btnSplit.setDisable(true);
 
 
-					for (int handIndex = 1; handIndex <= gc.playerHandsNumber() ; handIndex++) {
-						updateMoney(gc.countPlayerMoney(gc.getPlayerBet(), handIndex));
-						updateHandStatus(handIndex);
-						colorStatus(handIndex);
-					}
 
-					btnPlay.setDisable(false);
-					btnHit.setDisable(true);
-					btnStand.setDisable(true);
-					btnDouble.setDisable(true);
-					btnIns.setDisable(true);
-					btnSplit.setDisable(true);
-					btnSur.setDisable(true);
+		} else if(gc.hasBustPlayer(handIndex)){
 
-					houseHand.getChildren().add(hd.drawOpenHand(gc.getTable().getHouse().getHand()));
 
-				} else {
+			for (int handIndex = 1; handIndex <= gc.playerHandsNumber() ; handIndex++) {
+				updateMoney(gc.countPlayerMoney(gc.getPlayerBet(), handIndex));
+				updateHandStatus(handIndex);
+				colorStatus(handIndex);
+			}
 
-					btnDouble.setDisable(true);
-					btnSplit.setDisable(true);
-					btnSur.setDisable(true);
-				}
+			btnPlay.setDisable(false);
+			btnHit.setDisable(true);
+			btnStand.setDisable(true);
+			btnDouble.setDisable(true);
+			btnIns.setDisable(true);
+			btnSplit.setDisable(true);
+			btnSur.setDisable(true);
+
+			houseHand.getChildren().add(hd.drawOpenHand(gc.getTable().getHouse().getHand()));
+
+		} else {
+
+			btnDouble.setDisable(true);
+			btnSplit.setDisable(true);
+			btnSur.setDisable(true);
+		}
 
 
 
@@ -197,52 +219,52 @@ public class FxmlController {
 	@FXML
 	protected void stand(){
 
-				if(!gc.hasNextHand(handIndex)) {
+		if(!gc.hasNextHand(handIndex)) {
 
-					gc.playHouseRound();
+			gc.playHouseRound();
 
-					btnPlay.setDisable(false);
-					btnHit.setDisable(true);
-					btnStand.setDisable(true);
-					btnDouble.setDisable(true);
-					btnIns.setDisable(true);
-					btnSplit.setDisable(true);
-					btnSur.setDisable(true);
+			btnPlay.setDisable(false);
+			btnHit.setDisable(true);
+			btnStand.setDisable(true);
+			btnDouble.setDisable(true);
+			btnIns.setDisable(true);
+			btnSplit.setDisable(true);
+			btnSur.setDisable(true);
 
-					houseHand.getChildren().add(hd.drawOpenHand(gc.getTable().getHouse().getHand()));
-
-
-
-					for (int handIndex = 1; handIndex <= gc.playerHandsNumber() ; handIndex++) {
-						updateMoney(gc.countPlayerMoney(gc.getPlayerBet(), handIndex));
-						updateHandStatus(handIndex);
-						colorStatus(handIndex);
-					}
+			houseHand.getChildren().add(hd.drawOpenHand(gc.getTable().getHouse().getHand()));
 
 
 
-				} else {
+			for (int handIndex = 1; handIndex <= gc.playerHandsNumber() ; handIndex++) {
+				updateMoney(gc.countPlayerMoney(gc.getPlayerBet(), handIndex));
+				updateHandStatus(handIndex);
+				colorStatus(handIndex);
+			}
 
 
 
-					handIndex++;
-					colorStatus(handIndex);
+		} else {
 
-					btnPlay.setDisable(false);
-					btnHit.setDisable(false);
-					btnStand.setDisable(false);
-					btnDouble.setDisable(false);
-					if(gc.canPlayerIns())
-						btnIns.setDisable(false);
-					else
-						btnIns.setDisable(true);
-					if(gc.canPlayerSplit(handIndex))
-						btnSplit.setDisable(false);
-					else
-						btnSplit.setDisable(true);
-					btnSur.setDisable(false);
 
-				}
+
+			handIndex++;
+			colorStatus(handIndex);
+
+			btnPlay.setDisable(false);
+			btnHit.setDisable(false);
+			btnStand.setDisable(false);
+			btnDouble.setDisable(false);
+			if(gc.canPlayerIns())
+				btnIns.setDisable(false);
+			else
+				btnIns.setDisable(true);
+			if(gc.canPlayerSplit(handIndex))
+				btnSplit.setDisable(false);
+			else
+				btnSplit.setDisable(true);
+			btnSur.setDisable(false);
+
+		}
 
 
 
@@ -252,49 +274,49 @@ public class FxmlController {
 	@FXML
 	protected void doubleBet(){
 
-				gc.hit(handIndex);
-				gc.setBetDouble(handIndex);
-				drawHand(handIndex);
+		gc.hit(handIndex);
+		gc.setBetDouble(handIndex);
+		drawHand(handIndex);
+		colorStatus(handIndex);
+		if(!gc.hasNextHand(handIndex)) {
+
+			gc.playHouseRound();
+
+			btnPlay.setDisable(false);
+			btnHit.setDisable(true);
+			btnStand.setDisable(true);
+			btnDouble.setDisable(true);
+			btnIns.setDisable(true);
+			btnSplit.setDisable(true);
+			btnSur.setDisable(true);
+
+			houseHand.getChildren().add(hd.drawOpenHand(gc.getTable().getHouse().getHand()));
+
+			for (int handIndex = 1; handIndex <= gc.playerHandsNumber() ; handIndex++) {
+
+				updateMoney(gc.countPlayerMoney(gc.getPlayerBet(), handIndex));
+				updateHandStatus(handIndex);
 				colorStatus(handIndex);
-				if(!gc.hasNextHand(handIndex)) {
+			}
 
-					gc.playHouseRound();
+		} else {
 
-					btnPlay.setDisable(false);
-					btnHit.setDisable(true);
-					btnStand.setDisable(true);
-					btnDouble.setDisable(true);
-					btnIns.setDisable(true);
-					btnSplit.setDisable(true);
-					btnSur.setDisable(true);
+			handIndex++;
+			colorStatus(handIndex);
 
-					houseHand.getChildren().add(hd.drawOpenHand(gc.getTable().getHouse().getHand()));
-
-					for (int handIndex = 1; handIndex <= gc.playerHandsNumber() ; handIndex++) {
-
-						updateMoney(gc.countPlayerMoney(gc.getPlayerBet(), handIndex));
-						updateHandStatus(handIndex);
-						colorStatus(handIndex);
-					}
-
-				} else {
-
-					handIndex++;
-					colorStatus(handIndex);
-
-					btnPlay.setDisable(false);
-					btnHit.setDisable(false);
-					btnStand.setDisable(false);
-					btnDouble.setDisable(false);
-					if(gc.canPlayerIns())
-						btnIns.setDisable(false);
-					else
-						btnIns.setDisable(true);
-					if(gc.canPlayerSplit(1))
-						btnSplit.setDisable(false);
-					else
-						btnSplit.setDisable(true);
-					btnSur.setDisable(false);
+			btnPlay.setDisable(false);
+			btnHit.setDisable(false);
+			btnStand.setDisable(false);
+			btnDouble.setDisable(false);
+			if(gc.canPlayerIns())
+				btnIns.setDisable(false);
+			else
+				btnIns.setDisable(true);
+			if(gc.canPlayerSplit(1))
+				btnSplit.setDisable(false);
+			else
+				btnSplit.setDisable(true);
+			btnSur.setDisable(false);
 
 		}
 
@@ -381,6 +403,38 @@ public class FxmlController {
 		btnIns.setDisable(true);
 	}
 
+	@FXML
+	protected void logoutAction(){
+		Stage stage = (Stage) menubar.getScene().getWindow();
+
+
+		UserLoginDAOimpl loginDAO = new UserLoginDAOimpl();
+		Connection connection = loginDAO.connectToDatabase();
+		loginDAO.updateUser(connection, UserHandler.getUser().getUsername(), gc.getPlayerMoney());
+
+		Parent root;
+		try {
+			root = FXMLLoader.load(StartWindow.class.getResource("/gui/LoginAblak.fxml"));
+		} catch (IOException e) {
+			root = null;
+			e.printStackTrace();
+			System.exit(1);
+		}
+
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+	}
+
+	@FXML
+	protected void exitAction(){
+
+		UserLoginDAOimpl loginDAO = new UserLoginDAOimpl();
+		Connection connection = loginDAO.connectToDatabase();
+		loginDAO.updateUser(connection, UserHandler.getUser().getUsername(), gc.getPlayerMoney());
+
+		System.exit(0);
+	}
+
 	private void drawHand(int handIndex){
 
 		switch (handIndex) {
@@ -401,12 +455,12 @@ public class FxmlController {
 	}
 
 
-private void updateMoney(double money){
+	private void updateMoney(double money){
 		textDollar.setText(money+" $");
 	}
 
 
-private void updateHandStatus(int handIndex){
+	private void updateHandStatus(int handIndex){
 
 
 		if(gc.whoWin(handIndex).equals("player")){

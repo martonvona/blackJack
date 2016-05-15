@@ -223,4 +223,12 @@ public class GameController {
 		this.getTable().getPlayer().setBet(bet);
 	}
 
+	public void setPlayerMoney(double money){
+		this.table.getPlayer().setMoney(money);
+	}
+
+	public double getPlayerMoney(){
+		return this.getTable().getPlayer().getMoney();
+	}
+
 }
