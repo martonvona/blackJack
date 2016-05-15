@@ -1,24 +1,16 @@
 package gui;
 
-
-import com.sun.corba.se.impl.encoding.CodeSetConversion.BTCConverter;
-
-import bjmaven.Card;
 import bjmaven.GameController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
-public class fxmlController {
+public class FxmlController {
 
 	static GameController gc = new GameController();
 	static int handIndex;
@@ -107,7 +99,23 @@ public class fxmlController {
 
 		gc.deal();
 
+
+
 		handIndex = 1;
+
+		if(gc.hasBlackJackPlayer(handIndex)){
+			updateHandStatus(handIndex);
+
+			btnPlay.setDisable(false);
+			btnHit.setDisable(true);
+			btnStand.setDisable(true);
+			btnDouble.setDisable(true);
+			btnIns.setDisable(true);
+			btnSplit.setDisable(true);
+			btnSur.setDisable(true);
+
+		}else{
+
 
 		btnHit.setDisable(false);
 		btnStand.setDisable(false);
@@ -119,9 +127,10 @@ public class fxmlController {
 		if(gc.canPlayerSplit(1))
 			btnSplit.setDisable(false);
 		else
-			btnSplit.setDisable(false);
+			btnSplit.setDisable(true);
 		btnSur.setDisable(false);
 		btnPlay.setDisable(true);
+		}
 
 		houseHand.getChildren().add(hd.drawHideHand(gc.getTable().getHouse().getHand()));
 		pHand01.getChildren().add(hd.drawOpenHand(gc.getTable().getPlayer().getHand(1)));
@@ -153,6 +162,8 @@ public class fxmlController {
 					else
 						btnSplit.setDisable(true);
 
+
+
 				} else if(gc.hasBustPlayer(handIndex)){
 
 
@@ -176,6 +187,7 @@ public class fxmlController {
 
 					btnDouble.setDisable(true);
 					btnSplit.setDisable(true);
+					btnSur.setDisable(true);
 				}
 
 
@@ -210,6 +222,8 @@ public class fxmlController {
 
 
 				} else {
+
+
 
 					handIndex++;
 					colorStatus(handIndex);
@@ -290,6 +304,31 @@ public class fxmlController {
 	@FXML
 	protected void split(){
 		gc.split(handIndex);
+
+		if(gc.hasBlackJackPlayer(handIndex)){
+			updateHandStatus(handIndex);
+
+			btnPlay.setDisable(true);
+			btnHit.setDisable(false);
+			btnStand.setDisable(false);
+			btnDouble.setDisable(false);
+			btnIns.setDisable(true);
+			btnSur.setDisable(false);
+
+		}
+
+		if(gc.hasBlackJackPlayer(handIndex+1)){
+			updateHandStatus(handIndex+1);
+
+			btnPlay.setDisable(false);
+			btnHit.setDisable(true);
+			btnStand.setDisable(true);
+			btnDouble.setDisable(true);
+			btnIns.setDisable(true);
+			btnSur.setDisable(true);
+
+		}
+
 		drawHand(handIndex);
 		drawHand(handIndex+1);
 		colorStatus(handIndex);
@@ -339,6 +378,7 @@ public class fxmlController {
 	@FXML
 	protected void insurrance(){
 		gc.setInsurance(handIndex);
+		btnIns.setDisable(true);
 	}
 
 	private void drawHand(int handIndex){
@@ -349,6 +389,12 @@ public class fxmlController {
 			break;
 		case 2:
 			pHand02.getChildren().add(hd.drawOpenHand(gc.getTable().getPlayer().getHand(handIndex)));
+			break;
+		case 3:
+			pHand03.getChildren().add(hd.drawOpenHand(gc.getTable().getPlayer().getHand(handIndex)));
+			break;
+		case 4:
+			pHand04.getChildren().add(hd.drawOpenHand(gc.getTable().getPlayer().getHand(handIndex)));
 			break;
 		}
 

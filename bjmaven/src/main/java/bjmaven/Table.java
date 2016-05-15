@@ -13,13 +13,6 @@ public class Table {
 		this.house = house;
 	}
 
-	public Table(Table table) {
-		this.deck = table.getDeck();
-		this.player = table.getPlayer();
-		this.house = table.getHouse();
-
-	}
-
 	public Deck getDeck() {
 		return deck;
 	}

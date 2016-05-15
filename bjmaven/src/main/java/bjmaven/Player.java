@@ -17,20 +17,20 @@ public class Player {
 		hands.add(new Hand());
 	}
 
-	public void addCardToHand(Card card, int handNumber){
-		hands.get(handNumber-1).addCard(card);
+	public void addCardToHand(Card card, int handIndex){
+		hands.get(handIndex-1).addCard(card);
 	}
 
 	public void addHand(Hand hand){
 		this.hands.add(hand);
 	}
 
-	public int getHandsNumber(){
+	public int handsNumber(){
 		return hands.size();
 	}
 
-	public Hand getHand(int i){
-		return hands.get(i-1);
+	public Hand getHand(int handIndex){
+		return hands.get(handIndex-1);
 	}
 
 	public double getMoney() {

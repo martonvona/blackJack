@@ -2,7 +2,6 @@ package gui;
 
 import bjmaven.Card;
 import bjmaven.Hand;
-import bjmaven.Player;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;

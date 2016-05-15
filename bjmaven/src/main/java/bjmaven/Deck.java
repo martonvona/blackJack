@@ -12,7 +12,7 @@ public class Deck {
 
 			String[] names ={"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
 			String[] colors = {"spade", "club", "heart" , "diamond" };
-			int[] values = {1,2,3,4,5,6,7,8,9,10,10,10,10};
+			int[] values = {11,2,3,4,5,6,7,8,9,10,10,10,10};
 
 			for (String color : colors) {
 				for(int i=0; i<=12;i++){
@@ -24,7 +24,6 @@ public class Deck {
 
 		}
 
-
 		public Card getCard(){
 			Card card = deck.pop();
 			return card;
@@ -34,7 +33,4 @@ public class Deck {
 		public Stack<Card> getDeck() {
 			return deck;
 		}
-
-
-
 }

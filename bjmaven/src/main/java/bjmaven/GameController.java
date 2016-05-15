@@ -4,7 +4,6 @@ public class GameController {
 
 	private Table table;
 
-
 	private boolean split;
 
 	public GameController() {
@@ -12,15 +11,6 @@ public class GameController {
 		Player player = new Player();
 		House house = new House();
 		this.table= new Table(deck, player, house);
-	}
-
-	public boolean playerHasMoney(){
-
-		if(table.getPlayer().getMoney() > 50){
-			return true;
-		} else
-			return false;
-
 	}
 
 	public void deal(){
@@ -41,7 +31,7 @@ public class GameController {
 	}
 
 	public int playerHandsNumber(){
-		return table.getPlayer().getHandsNumber();
+		return table.getPlayer().handsNumber();
 	}
 
 	public double countPlayerMoney(double pot, int handIndex){
@@ -49,95 +39,75 @@ public class GameController {
 		return this.getTable().getPlayer().getMoney();
 	}
 
-	public double countPot(double bet, int playerHandNumber){
+	public double countPot(double bet, int handIndex){
 
 		double reward = 0;
 
 
-		if(this.hasBlackJackPlayer() == true ){
+		if(this.hasBlackJackPlayer(handIndex) == true ){
 			reward = bet*3/2;
-		}else if(this.getTable().getPlayer().getHand(playerHandNumber).isSurrender()){
+		}else if(this.getTable().getPlayer().getHand(handIndex).isSurrender()){
 			reward = -bet;
-		} else if(this.hasBustPlayer(playerHandNumber) == true){
+		} else if(this.hasBustPlayer(handIndex) == true){
 			reward = -bet;
-		} else if(this.getTable().getPlayer().getHand(playerHandNumber).isInsurance() == true){
+		} else if(this.getTable().getPlayer().getHand(handIndex).isInsurance() == true){
 			reward = -bet/2;
-		} else if(this.getTable().getPlayer().getHand(playerHandNumber).isInsurance() == true
-				&& !this.hasBlackJackHouse() && this.whoWin(playerHandNumber).equals("player")){
+		} else if(this.getTable().getPlayer().getHand(handIndex).isInsurance() == true
+				&& !this.hasBlackJackHouse() && this.whoWin(handIndex).equals("player")){
 			reward = bet-bet/2;
-		} else if(this.getTable().getPlayer().getHand(playerHandNumber).isInsurance() == true
-				&& !this.hasBlackJackHouse() && this.whoWin(playerHandNumber).equals("house")){
+		} else if(this.getTable().getPlayer().getHand(handIndex).isInsurance() == true
+				&& !this.hasBlackJackHouse() && this.whoWin(handIndex).equals("house")){
 			reward = -(bet + bet/2);
-		} else if(this.getTable().getPlayer().getHand(playerHandNumber).isInsurance() == true
-				&& !this.hasBlackJackHouse() && this.whoWin(playerHandNumber).equals("player")
-				&& this.getTable().getPlayer().getHand(playerHandNumber).isBetDouble() == true){
+		} else if(this.getTable().getPlayer().getHand(handIndex).isInsurance() == true
+				&& !this.hasBlackJackHouse() && this.whoWin(handIndex).equals("player")
+				&& this.getTable().getPlayer().getHand(handIndex).isBetDouble() == true){
 			reward = bet*2 -bet;
-		} else if(this.getTable().getPlayer().getHand(playerHandNumber).isInsurance() == true
-				&& !this.hasBlackJackHouse() && this.whoWin(playerHandNumber).equals("house")
-				&& this.getTable().getPlayer().getHand(playerHandNumber).isBetDouble() == true){
+		} else if(this.getTable().getPlayer().getHand(handIndex).isInsurance() == true
+				&& !this.hasBlackJackHouse() && this.whoWin(handIndex).equals("house")
+				&& this.getTable().getPlayer().getHand(handIndex).isBetDouble() == true){
 			reward = -bet*3;
-		} else if(this.getTable().getPlayer().getHand(playerHandNumber).isBetDouble() == true
-				&& this.whoWin(playerHandNumber).equals("player")){
+		} else if(this.getTable().getPlayer().getHand(handIndex).isBetDouble() == true
+				&& this.whoWin(handIndex).equals("player")){
 			reward = bet*2;
-		} else if(this.getTable().getPlayer().getHand(playerHandNumber).isBetDouble() == true
-				&& this.whoWin(playerHandNumber).equals("house")){
+		} else if(this.getTable().getPlayer().getHand(handIndex).isBetDouble() == true
+				&& this.whoWin(handIndex).equals("house")){
 			reward = -bet*2;
-		} else if(this.whoWin(playerHandNumber).equals("player")){
+		} else if(this.whoWin(handIndex).equals("player")){
 			reward = bet;
-		} else if(this.whoWin(playerHandNumber).equals("house")){
+		} else if(this.whoWin(handIndex).equals("house")){
 			reward = -bet;
 		}
-		System.out.println(this.getTable().getPlayer().getHand(playerHandNumber).isBetDouble());
-		System.out.println("reward: "+reward);
+		//System.out.println(this.getTable().getPlayer().getHand(handIndex).isBetDouble());
+		//System.out.println("reward: "+reward);
 
 		return reward;
 	}
 
-	public String whoWin(int playerHandnumber){
+	public String whoWin(int handIndex){
 
 		String winner = "who Win";
 
-		if(hasBlackJackPlayer() && !hasBlackJackHouse()){
+		if(hasBlackJackPlayer(handIndex) && !hasBlackJackHouse()){
 			winner = "player";
-		} else if(hasBlackJackHouse() && hasBlackJackPlayer()){
+		} else if(hasBlackJackHouse() && hasBlackJackPlayer(handIndex)){
 			winner = "push";
-		} else if(hasBustPlayer(playerHandnumber)){
+		} else if(hasBustPlayer(handIndex)){
 			winner = "house";
 		} else if(hasBustHouse()){
 			winner = "player";
-		} else if(table.getPlayer().getHand(playerHandnumber).handSum() > table.getHouse().getHand().handSum()){
+		} else if(table.getPlayer().getHand(handIndex).handValue() > table.getHouse().getHand().handValue()){
 			winner = "player";
-		} else if(table.getPlayer().getHand(playerHandnumber).handSum() == table.getHouse().getHand().handSum()){
+		} else if(table.getPlayer().getHand(handIndex).handValue() == table.getHouse().getHand().handValue()){
 			winner = "push";
-		} else if(table.getPlayer().getHand(playerHandnumber).handSum() < table.getHouse().getHand().handSum())
+		} else if(table.getPlayer().getHand(handIndex).handValue() < table.getHouse().getHand().handValue())
 			winner = "house";
 
 		return winner;
 	}
 
-	public String[] playerOptions(int i){
+	public boolean hasBlackJackPlayer(int handIndex){
 
-		String[] options  = {"Hit","Stand","Surrender","Double"," ", " "};
-
-		if(table.getHouse().getHand().getCard(1).getName().equals("A")
-				&& table.getPlayer().getHand(i).cardsNum() == 2){
-			options[4] = "Insurance";
-		}
-
-		if(table.getPlayer().getHand(i).getCard(1).getName()
-				.equals(table.getPlayer().getHand(i).getCard(2).getName())
-				&& table.getPlayer().getHand(i).cardsNum() == 2 ){
-			options[5] = "split";
-		}
-
-		return options;
-
-	}
-
-
-	public boolean hasBlackJackPlayer(){
-
-		if((table.getPlayer().getHand(1).getCard(1).getValue() + table.getPlayer().getHand(1).getCard(2).getValue()) == 21)
+		if((table.getPlayer().getHand(handIndex).getCard(1).getValue() + table.getPlayer().getHand(handIndex).getCard(2).getValue()) == 21)
 			return true;
 		else
 			return false;
@@ -153,15 +123,15 @@ public class GameController {
 
 	}
 
-	public boolean hasBustPlayer(int i){
-		if(table.getPlayer().getHand(i).handSum() > 21)
+	public boolean hasBustPlayer(int handIndex){
+		if(table.getPlayer().getHand(handIndex).handValue() > 21)
 			return true;
 		else
 			return false;
 	}
 
 	public boolean hasBustHouse(){
-		if(table.getHouse().getHand().handSum() > 21)
+		if(table.getHouse().getHand().handValue() > 21)
 			return true;
 		else
 			return false;
@@ -212,33 +182,27 @@ public class GameController {
 	}
 
 	public boolean hasNextHand(int handIndex){
-		if(handIndex < this.getTable().getPlayer().getHandsNumber()){
-			//System.out.println("playerHand: "+handIndex+"handsNumber: "+this.getTable().getPlayer().getHandsNumber() );
-
+		if(handIndex < this.getTable().getPlayer().handsNumber()){
 			return true;
 			}
 		else{
-			//System.out.println("playerHand: "+playerHand+"handsNumber: "+this.getTable().getPlayer().getHandsNumber() );
 			return false;
 			}
 	}
 
-	public void split(int playerHand){
+	public void split(int handIndex){
 
 		this.getTable().getPlayer().addHand(new Hand());
 
-		this.getTable().getPlayer().getHand(playerHand+1).
-			addCard(this.getTable().getPlayer().getHand(playerHand).getCard(2));
+		this.getTable().getPlayer().getHand(handIndex+1).
+			addCard(this.getTable().getPlayer().getHand(handIndex).getCard(2));
 
-		this.getTable().getPlayer().getHand(playerHand+1)
+		this.getTable().getPlayer().getHand(handIndex+1)
 			.addCard(this.getTable().getDeck().getCard());
 
 
-		this.getTable().getPlayer().getHand(playerHand).
+		this.getTable().getPlayer().getHand(handIndex).
 			changeCard(2, this.getTable().getDeck().getCard() );
-
-
-
 
 
 	}
@@ -248,7 +212,7 @@ public class GameController {
 	}
 
 	public int playersHandsNumber(){
-		return this.getTable().getPlayer().getHandsNumber();
+		return this.getTable().getPlayer().handsNumber();
 	}
 
 	public double getPlayerBet(){

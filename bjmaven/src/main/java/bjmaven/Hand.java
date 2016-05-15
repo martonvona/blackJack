@@ -17,11 +17,32 @@ public class Hand {
 		this.surrender = false;
 	}
 
-	public int handSum(){
+	public int handValue(){
 		int i=0;
+		boolean hasA = false;
+
 
 		for (Card card : cards) {
+
+			if(card.getName().equals("A")){
+				hasA = true;
+			}
 			i += card.getValue();
+		}
+
+
+
+		if( i > 21 && hasA ){
+
+			i = 0;
+
+			for (Card card : cards) {
+
+				if(card.getName().equals("A"))
+					card.setValue(1);
+
+				i += card.getValue();
+			}
 		}
 
 		return i;
@@ -79,7 +100,5 @@ public class Hand {
 	public void setBetDouble(boolean betDouble) {
 		this.betDouble = betDouble;
 	}
-
-
 
 }

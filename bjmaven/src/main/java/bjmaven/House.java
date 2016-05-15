@@ -23,14 +23,13 @@ public class House {
 		return hand;
 	}
 
-
 	public int play(Deck deck){
 
-		while(this.hand.handSum()<17){
+		while(this.hand.handValue()<17){
 			this.addCardToHand(deck.getCard());
 		}
 
-		return this.hand.handSum();
+		return this.hand.handValue();
 
 	}
 
