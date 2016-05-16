@@ -382,6 +382,9 @@ public class FxmlController {
 
 		} else {
 
+			handIndex++;
+			colorStatus(handIndex);
+
 			btnHit.setDisable(false);
 			btnStand.setDisable(false);
 			btnDouble.setDisable(false);
@@ -389,7 +392,7 @@ public class FxmlController {
 				btnIns.setDisable(false);
 			else
 				btnIns.setDisable(true);
-			if(gc.canPlayerSplit(1))
+			if(gc.canPlayerSplit(handIndex))
 				btnSplit.setDisable(false);
 			else
 				btnSplit.setDisable(true);

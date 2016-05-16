@@ -41,44 +41,83 @@ public class GameController {
 
 	public double countPot(double bet, int handIndex){
 
-		double reward = 0;
+		double reward = 0.0;
+
+		if(this.getTable().getPlayer().getHand(handIndex).isSurrender()){
+
+			reward += -bet/2.0;
+
+			if(this.getTable().getPlayer().getHand(handIndex).isBetDouble())
+				reward += -bet/2.0;;
+
+			if(this.getTable().getPlayer().getHand(handIndex).isInsurance())
+				reward += -bet/2.0;
+
+		}else{
+
+			String winner = this.whoWin(handIndex);
+
+			switch (winner) {
+
+			case "house" :
+				if(this.hasBlackJackHouse()){
+
+					reward += -bet;
+
+					if(this.getTable().getPlayer().getHand(handIndex).isBetDouble())
+						reward += -bet;
+
+					if(this.getTable().getPlayer().getHand(handIndex).isInsurance())
+						reward += bet/2.0;
 
 
-		if(this.hasBlackJackPlayer(handIndex) == true ){
-			reward = bet*3/2;
-		}else if(this.getTable().getPlayer().getHand(handIndex).isSurrender()){
-			reward = -bet;
-		} else if(this.hasBustPlayer(handIndex) == true){
-			reward = -bet;
-		} else if(this.getTable().getPlayer().getHand(handIndex).isInsurance() == true){
-			reward = -bet/2;
-		} else if(this.getTable().getPlayer().getHand(handIndex).isInsurance() == true
-				&& !this.hasBlackJackHouse() && this.whoWin(handIndex).equals("player")){
-			reward = bet-bet/2;
-		} else if(this.getTable().getPlayer().getHand(handIndex).isInsurance() == true
-				&& !this.hasBlackJackHouse() && this.whoWin(handIndex).equals("house")){
-			reward = -(bet + bet/2);
-		} else if(this.getTable().getPlayer().getHand(handIndex).isInsurance() == true
-				&& !this.hasBlackJackHouse() && this.whoWin(handIndex).equals("player")
-				&& this.getTable().getPlayer().getHand(handIndex).isBetDouble() == true){
-			reward = bet*2 -bet;
-		} else if(this.getTable().getPlayer().getHand(handIndex).isInsurance() == true
-				&& !this.hasBlackJackHouse() && this.whoWin(handIndex).equals("house")
-				&& this.getTable().getPlayer().getHand(handIndex).isBetDouble() == true){
-			reward = -bet*3;
-		} else if(this.getTable().getPlayer().getHand(handIndex).isBetDouble() == true
-				&& this.whoWin(handIndex).equals("player")){
-			reward = bet*2;
-		} else if(this.getTable().getPlayer().getHand(handIndex).isBetDouble() == true
-				&& this.whoWin(handIndex).equals("house")){
-			reward = -bet*2;
-		} else if(this.whoWin(handIndex).equals("player")){
-			reward = bet;
-		} else if(this.whoWin(handIndex).equals("house")){
-			reward = -bet;
+				} else {
+
+					reward += -bet;
+
+					if(this.getTable().getPlayer().getHand(handIndex).isBetDouble())
+						reward += -bet;
+
+					if(this.getTable().getPlayer().getHand(handIndex).isInsurance())
+						reward += -bet/2.0;
+
+				}
+				break;
+
+			case "push" :
+
+
+				reward = 0;
+
+				if(this.getTable().getPlayer().getHand(handIndex).isInsurance())
+					reward += -bet/2.0;
+
+				break;
+
+			case "player" :
+
+				if(this.hasBlackJackPlayer(handIndex)){
+
+					reward += bet*1.5;
+
+				} else {
+
+					reward += bet;
+
+					if(this.getTable().getPlayer().getHand(handIndex).isBetDouble())
+						reward += bet;
+
+					if(this.getTable().getPlayer().getHand(handIndex).isInsurance())
+						reward += -bet/2.0;
+
+				}
+				break;
+
+
+			}
+
+
 		}
-		//System.out.println(this.getTable().getPlayer().getHand(handIndex).isBetDouble());
-		//System.out.println("reward: "+reward);
 
 		return reward;
 	}
@@ -173,9 +212,9 @@ public class GameController {
 			return false;
 	}
 
-	public boolean canPlayerSplit(int playerHand){
-		if (this.getTable().getPlayer().getHand(playerHand).getCard(1).getName().equals(
-				this.getTable().getPlayer().getHand(playerHand).getCard(2).getName()))
+	public boolean canPlayerSplit(int handIndex){
+		if (this.getTable().getPlayer().getHand(handIndex).getCard(1).getName().equals(
+				this.getTable().getPlayer().getHand(handIndex).getCard(2).getName()))
 			return true;
 		else
 			return false;
@@ -184,10 +223,10 @@ public class GameController {
 	public boolean hasNextHand(int handIndex){
 		if(handIndex < this.getTable().getPlayer().handsNumber()){
 			return true;
-			}
+		}
 		else{
 			return false;
-			}
+		}
 	}
 
 	public void split(int handIndex){
@@ -195,14 +234,14 @@ public class GameController {
 		this.getTable().getPlayer().addHand(new Hand());
 
 		this.getTable().getPlayer().getHand(handIndex+1).
-			addCard(this.getTable().getPlayer().getHand(handIndex).getCard(2));
+		addCard(this.getTable().getPlayer().getHand(handIndex).getCard(2));
 
 		this.getTable().getPlayer().getHand(handIndex+1)
-			.addCard(this.getTable().getDeck().getCard());
+		.addCard(this.getTable().getDeck().getCard());
 
 
 		this.getTable().getPlayer().getHand(handIndex).
-			changeCard(2, this.getTable().getDeck().getCard() );
+		changeCard(2, this.getTable().getDeck().getCard() );
 
 
 	}

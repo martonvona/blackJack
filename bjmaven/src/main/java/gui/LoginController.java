@@ -48,9 +48,13 @@ public class LoginController {
 			e.printStackTrace();
 		}
 
-		if(user != null){
+		if(user != null && user.getMoney() > -1000.0){
 			UserHandler.setUser(user);
 			changeScene(event);
+		} else if(user == null){
+			System.out.println("kerem regisztraljon");
+		}else if (user.getMoney() <=  -1000.0){
+			System.out.println("Sajnaljuk de tul lepett a hitel kereten");
 		}
 
 
@@ -88,7 +92,7 @@ private void changeScene(ActionEvent event){
 
 	Parent root;
 	try {
-		root = FXMLLoader.load(StartWindow.class.getResource("/gui/table.fxml"));
+		root = FXMLLoader.load(StartWindow.class.getResource("/table.fxml"));
 	} catch (IOException e) {
 		root = null;
 		e.printStackTrace();

@@ -32,7 +32,7 @@ public class StartWindow extends Application {
 
 		Parent root;
 		try {
-			root = FXMLLoader.load(StartWindow.class.getResource("/gui/LoginAblak.fxml"));
+			root = FXMLLoader.load(StartWindow.class.getResource("/LoginAblak.fxml"));
 		} catch (IOException e) {
 			root = null;
 			e.printStackTrace();
