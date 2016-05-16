@@ -126,13 +126,17 @@ public class FxmlController {
 		handIndex = 1;
 
 		if(gc.hasBlackJackPlayer(handIndex)){
+
+			updateMoney(gc.countPlayerMoney(gc.getPlayerBet(), handIndex));
 			updateHandStatus(handIndex);
+			colorStatus(handIndex);
 
 			btnPlay.setDisable(false);
 			btnHit.setDisable(true);
 			btnStand.setDisable(true);
 			btnDouble.setDisable(true);
 			btnIns.setDisable(true);
+			//itt
 			btnSplit.setDisable(true);
 			btnSur.setDisable(true);
 
@@ -148,7 +152,7 @@ public class FxmlController {
 				btnIns.setDisable(true);
 			if(gc.canPlayerSplit(1))
 				btnSplit.setDisable(false);
-			else
+			else //
 				btnSplit.setDisable(true);
 			btnSur.setDisable(false);
 			btnPlay.setDisable(true);
@@ -250,7 +254,7 @@ public class FxmlController {
 			handIndex++;
 			colorStatus(handIndex);
 
-			btnPlay.setDisable(false);
+			btnPlay.setDisable(true);
 			btnHit.setDisable(false);
 			btnStand.setDisable(false);
 			btnDouble.setDisable(false);
@@ -327,6 +331,8 @@ public class FxmlController {
 	protected void split(){
 		gc.split(handIndex);
 
+		int lastHandIndex = gc.playerHandsNumber();
+
 		if(gc.hasBlackJackPlayer(handIndex)){
 			updateHandStatus(handIndex);
 
@@ -339,8 +345,8 @@ public class FxmlController {
 
 		}
 
-		if(gc.hasBlackJackPlayer(handIndex+1)){
-			updateHandStatus(handIndex+1);
+		if(gc.hasBlackJackPlayer(lastHandIndex)){
+			updateHandStatus(lastHandIndex);
 
 			btnPlay.setDisable(false);
 			btnHit.setDisable(true);
@@ -352,7 +358,7 @@ public class FxmlController {
 		}
 
 		drawHand(handIndex);
-		drawHand(handIndex+1);
+		drawHand(lastHandIndex);
 		colorStatus(handIndex);
 	}
 
@@ -417,7 +423,7 @@ public class FxmlController {
 
 		Parent root;
 		try {
-			root = FXMLLoader.load(StartWindow.class.getResource("/gui/LoginAblak.fxml"));
+			root = FXMLLoader.load(StartWindow.class.getResource("/LoginAblak.fxml"));
 		} catch (IOException e) {
 			root = null;
 			e.printStackTrace();
@@ -528,7 +534,7 @@ public class FxmlController {
 	private void colorStatus(int handIndex){
 		Color colorLive = Color.web("#FFFFFF");
 		Color colorActive = Color.web("#fff742");
-		Color colorDead = Color.web("#11721d");
+		Color colorDead = Color.web("#25a15e");
 
 		switch (gc.playerHandsNumber()) {
 		case 1:

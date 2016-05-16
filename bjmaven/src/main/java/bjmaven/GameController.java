@@ -231,19 +231,20 @@ public class GameController {
 
 	public void split(int handIndex){
 
-		this.getTable().getPlayer().addHand(new Hand());
 
-		this.getTable().getPlayer().getHand(handIndex+1).
+
+		this.getTable().getPlayer().addHand(new Hand());
+		int lastHandIndex = this.playerHandsNumber();
+
+		this.getTable().getPlayer().getHand(lastHandIndex).
 		addCard(this.getTable().getPlayer().getHand(handIndex).getCard(2));
 
-		this.getTable().getPlayer().getHand(handIndex+1)
+		this.getTable().getPlayer().getHand(lastHandIndex)
 		.addCard(this.getTable().getDeck().getCard());
 
 
 		this.getTable().getPlayer().getHand(handIndex).
 		changeCard(2, this.getTable().getDeck().getCard() );
-
-
 	}
 
 	public void playHouseRound(){

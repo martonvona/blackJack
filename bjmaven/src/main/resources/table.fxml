@@ -13,7 +13,7 @@
 			<children>
 				<Text fx:id="textOptions" strokeType="OUTSIDE" strokeWidth="0.0" text="OPTIONS">
 					<VBox.margin>
-						<Insets bottom="15.0" />
+						<Insets bottom="5.0" />
 					</VBox.margin>
 				</Text>
 				<Button fx:id="btnHit" disable="true" maxWidth="80.0" minWidth="0.0" mnemonicParsing="false" onAction="#hit" stylesheets="@theme.css" text="Hit">
@@ -47,7 +47,7 @@
 				<Button fx:id="btnIns" disable="true" minWidth="80.0" mnemonicParsing="false" onAction="#insurrance" text="Insurrance" />
 				<Text fx:id="textBet" strokeType="OUTSIDE" strokeWidth="0.0" text="BET">
 					<VBox.margin>
-						<Insets top="20.0" />
+						<Insets bottom="5.0" top="20.0" />
 					</VBox.margin>
 				</Text>
 				<TextField fx:id="inputBet" maxWidth="80.0" minWidth="0.0" onKeyReleased="#activatePlay" />
@@ -58,7 +58,7 @@
 				</Button>
 				<Text fx:id="textMoney" strokeType="OUTSIDE" strokeWidth="0.0" text="MONEY">
 					<VBox.margin>
-						<Insets top="10.0" />
+						<Insets top="20.0" />
 					</VBox.margin>
 				</Text>
 				<Text fx:id="textDollar" strokeType="OUTSIDE" strokeWidth="0.0">
@@ -90,56 +90,52 @@
 			</children>
 		</VBox>
 	</top>
-	<center>
-		<GridPane fx:id="gridPane" prefHeight="375.0" prefWidth="521.0" BorderPane.alignment="CENTER">
-			<columnConstraints>
-				<ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="107.0" />
-				<ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="141.0" />
-				<ColumnConstraints maxWidth="206.0" minWidth="5.0" prefWidth="128.0" />
-            <ColumnConstraints maxWidth="206.0" minWidth="10.0" prefWidth="100.0" />
-			</columnConstraints>
-			<rowConstraints>
-            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="87.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="87.0" minHeight="0.0" prefHeight="23.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="188.0" minHeight="10.0" prefHeight="119.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="191.0" minHeight="8.0" prefHeight="25.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="191.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="122.0" vgrow="SOMETIMES" />
-			</rowConstraints>
-			<children>
-				<Text fx:id="textHouse" strokeType="OUTSIDE" strokeWidth="0.0" text="HOUSE" GridPane.rowIndex="1" />
-				<Text fx:id="textPlayer" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYER" textAlignment="CENTER" GridPane.rowIndex="4" />
-				<Pane fx:id="pHand01" prefHeight="119.0" prefWidth="105.0" GridPane.rowIndex="6">
-					<GridPane.margin>
-						<Insets />
-					</GridPane.margin>
-				</Pane>
-				<Pane fx:id="pHand02" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-					<GridPane.margin>
-						<Insets />
-					</GridPane.margin>
-				</Pane>
-				<Pane fx:id="houseHand" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
-            <Pane fx:id="pHand03" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <Pane fx:id="pHand04" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-            <Text fx:id="h01Status" strokeType="OUTSIDE" strokeWidth="0.0" text="1. hand" GridPane.rowIndex="5" />
-            <Text fx:id="h02Status" strokeType="OUTSIDE" strokeWidth="0.0" text="2. hand" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Text fx:id="h03Status" strokeType="OUTSIDE" strokeWidth="0.0" text="3. hand" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Text fx:id="h04Status" strokeType="OUTSIDE" strokeWidth="0.0" text="4. hand" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <Text fx:id="hStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="House's hand" GridPane.rowIndex="2" />
-            <ImageView fitHeight="51.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@../../resources/images/bjFlag.png" />
-               </image>
-            </ImageView>
-			</children>
-			<BorderPane.margin>
-				<Insets />
-			</BorderPane.margin>
-			<padding>
-				<Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-			</padding>
-		</GridPane>
-	</center>
+   <center>
+      <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane fx:id="header" prefHeight="48.0" prefWidth="538.0" />
+      		<GridPane fx:id="gridPane" prefHeight="406.0" prefWidth="538.0">
+      			<columnConstraints>
+      				<ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="107.0" />
+      				<ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="141.0" />
+      				<ColumnConstraints maxWidth="206.0" minWidth="5.0" prefWidth="128.0" />
+                  <ColumnConstraints maxWidth="206.0" minWidth="10.0" prefWidth="100.0" />
+      			</columnConstraints>
+      			<rowConstraints>
+      				<RowConstraints maxHeight="87.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="87.0" minHeight="0.0" prefHeight="23.0" vgrow="SOMETIMES" />
+      				<RowConstraints maxHeight="188.0" minHeight="10.0" prefHeight="119.0" vgrow="SOMETIMES" />
+      				<RowConstraints maxHeight="191.0" minHeight="8.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="191.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+      				<RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="122.0" vgrow="SOMETIMES" />
+      			</rowConstraints>
+      			<children>
+      				<Text fx:id="textHouse" strokeType="OUTSIDE" strokeWidth="0.0" text="HOUSE" />
+      				<Text fx:id="textPlayer" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYER" textAlignment="CENTER" GridPane.rowIndex="3" />
+      				<Pane fx:id="pHand01" prefHeight="119.0" prefWidth="105.0" GridPane.rowIndex="5">
+      					<GridPane.margin>
+      						<Insets />
+      					</GridPane.margin>
+      				</Pane>
+      				<Pane fx:id="pHand02" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+      					<GridPane.margin>
+      						<Insets />
+      					</GridPane.margin>
+      				</Pane>
+      				<Pane fx:id="houseHand" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                  <Pane fx:id="pHand03" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <Pane fx:id="pHand04" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <Text fx:id="h01Status" strokeType="OUTSIDE" strokeWidth="0.0" text="1. hand" GridPane.rowIndex="4" />
+                  <Text fx:id="h02Status" strokeType="OUTSIDE" strokeWidth="0.0" text="2. hand" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Text fx:id="h03Status" strokeType="OUTSIDE" strokeWidth="0.0" text="3. hand" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Text fx:id="h04Status" strokeType="OUTSIDE" strokeWidth="0.0" text="4. hand" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <Text fx:id="hStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="House's hand" GridPane.rowIndex="1" />
+      			</children>
+      			<padding>
+      				<Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      			</padding>
+      		</GridPane>
+         </children>
+      </VBox>
+   </center>
 </BorderPane>

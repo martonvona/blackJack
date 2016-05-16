@@ -1,0 +1,30 @@
+#anchorPane {
+
+	-fx-background-image: url("./images/loginBg.png");
+	-fx-background-repeat: no-repeat;
+
+}
+
+#loginText{
+	-fx-fill: #ffffff;
+}
+
+.button{
+	-fx-text-fill:  #ffffff;
+   -fx-background-color: transparent ;
+   -fx-border-color: #fed14a;
+   -fx-border-radius: 2px;
+   -fx-background-radius: 2px;
+   -fx-background-insets: 1px;
+}
+
+.button:hover{
+	-fx-text-fill:  #ffffff;
+   -fx-border-color: #ffffff;
+}
+
+.button:pressed{
+	-fx-text-fill:  #46090b;
+   -fx-background-color: #ffffff;
+   -fx-border-color: #cea52c;
+}
