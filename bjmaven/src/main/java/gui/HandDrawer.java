@@ -1,5 +1,28 @@
 package gui;
 
+/*
+ * #%L
+ * black-jack
+ * %%
+ * Copyright (C) 2016 Debreceni Egyetem, Informatikai Kar
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
+ */
+
+
 import bjmaven.Card;
 import bjmaven.Hand;
 import javafx.scene.image.Image;
@@ -21,7 +44,7 @@ public class HandDrawer {
 
 			String cardName = card.getColor()+"_"+card.getName();
 
-			Image image = new Image("file:src/main/resources/images/"+cardName+".png");
+			Image image = new Image(getClass().getResourceAsStream("/images/"+cardName+".png"));
 			ImageView imageView = new ImageView();
 			imageView.setImage(image);
 			imageView.setFitHeight(113);
@@ -46,7 +69,7 @@ public class HandDrawer {
 
 		cardName = hand.getCard(1).getColor()+"_"+hand.getCard(1).getName();
 
-		Image image = new Image("file:src/main/resources/images/"+cardName+".png");
+		Image image = new Image(getClass().getResourceAsStream("/images/"+cardName+".png"));
 		ImageView imageView = new ImageView();
 		imageView.setImage(image);
 		imageView.setFitHeight(113);
@@ -55,7 +78,7 @@ public class HandDrawer {
 		imageView.setPreserveRatio(true);
 		pane.getChildren().add(imageView);
 
-		Image image2 = new Image("file:src/main/resources/images/back.png");
+		Image image2 = new Image(getClass().getResourceAsStream("/images/back.png"));
 		ImageView imageView2 = new ImageView();
 		imageView2.setImage(image2);
 		imageView2.setFitHeight(113);
