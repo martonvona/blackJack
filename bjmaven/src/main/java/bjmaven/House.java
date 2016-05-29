@@ -23,29 +23,49 @@ package bjmaven;
  */
 
 
-
+/**
+ * Az osztót (casino/ház) reprezentáló osztály.
+ *
+ */
 public class House {
-
+	/**
+	 * A ház keze.
+	 */
 	private Hand hand;
 
-
+	/**
+	 * Konstruktor, mely létrehoz egy üres kezet az osztónak.
+	 */
 	public House() {
 		hand = new Hand();
 	}
 
-
+	/**
+	 * A metódus ad egy lapot  az osztónak.
+	 * @param card az osztott lap.
+	 */
 	public void addCardToHand(Card card) {
 		hand.addCard(card);
 	}
-
+	/**
+	 * A metódus visza veszi az osztó lapjait.
+	 */
 	public void clearHand(){
 		hand.clearHand();
 	}
-
+	/**
+	 * Getter metódus, mely vissza adja az osztó kezében lévő lapokat.
+	 * @return hand - az osztó keze.
+	 */
 	public Hand  getHand(){
 		return hand;
 	}
 
+	/**
+	 * A metódus lejátsza az osztó körét.
+	 * @param deck A pakli amiből húz az osztó.
+	 * @return érték - az osztó lapjainak értéke miután befejezte a körét.
+	 */
 	public int play(Deck deck){
 
 		while(this.hand.handValue()<17){

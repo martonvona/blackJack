@@ -23,6 +23,9 @@ package gui;
  */
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import bjmaven.Card;
 import bjmaven.Hand;
 import javafx.scene.image.Image;
@@ -30,6 +33,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class HandDrawer {
+	
+	private static Logger logger = LoggerFactory.getLogger(HandDrawer.class);
 
 	public HandDrawer() {
 
@@ -57,6 +62,8 @@ public class HandDrawer {
 
 			cardLayoutX += 20;
 		}
+		
+		logger.info("A lapok betoltese sikeres volt.");
 
 		return pane;
 
@@ -87,7 +94,9 @@ public class HandDrawer {
 		imageView2.setPreserveRatio(true);
 		imageView2.setLayoutX(20);
 		pane.getChildren().add(imageView2);
-
+		
+		logger.info("A rejtett lap betoltese sikeres volt.");
+		
 		return pane;
 
 	}

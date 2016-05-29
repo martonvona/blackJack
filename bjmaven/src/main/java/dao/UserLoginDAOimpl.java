@@ -32,8 +32,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * 
+ * A felhasználóval kapcsolatos adatbázisműveletket megvalósító oosztály hsqldb esetén.
+ *
+ */
 public class UserLoginDAOimpl implements UserLoginDAO{
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Connection connectToDatabase() {
 
@@ -64,7 +71,10 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 
 
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User selectUser(Connection connection, String username, String password) {
 
@@ -118,7 +128,9 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 			return null;
 		}
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean updateUser(Connection connection, String username, double money) {
 
@@ -146,7 +158,9 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 			return false;
 		}
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User insertUser(Connection connection, String username, String password) {
 
@@ -190,7 +204,12 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 			return null;
 		}
 	}
-
+	
+	/**
+	 * A metódus a megadott jelszót md5 algorítmus segítségével kódolja  és visszatér a kódolt jelszóval
+	 * @param password A kódolni kívánt jelszó.
+	 * @return A titkosított jelszó.
+	 */
 	private String md5(String password){
 
 		String generatedPassword = null;

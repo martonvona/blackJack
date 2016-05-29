@@ -22,41 +22,85 @@ package bjmaven;
  * #L%
  */
 
-
+/**
+ * A francia kártya egy lapját reprezentáló osztály.
+ *
+ */
 public class Card {
 
-	 private String color;
-	 private String name;
-	 private int value;
+	/**
+	 * A lapnak a színe. Pl.: Spade
+	 * 
+	 */
+	private String color;
 
-	 public Card(String color, String name, int value ){
+	/**
+	 * A lapnak neve. Pl.: Q
+	 */
+	private String name;
 
-		 this.color = color;
-		 this.name = name;
-		 this.value = value;
+	/**
+	 * A lapnak az értéke. Pl.: 10
+	 */
+	private int value;
 
-	 }
+	/**
+	 * Konstruktor, mely létrehoz egy kártyalapot a megadott paraméterekkel.
+	 * @param color A kártya színe.
+	 * @param name A kártya neve.
+	 * @param value A kártya értéke.
+	 */
+	public Card(String color, String name, int value ){
 
-	 public String getColor() {
+		this.color = color;
+		this.name = name;
+		this.value = value;
+	}
+
+	/**
+	 * Getter metódus, mely visszatért a kártya színével.
+	 * @return color - A kártya színe.
+	 */
+	public String getColor() {
 		return color;
 	}
 
-	 public String getName() {
+	/**
+	 * Getter metódus, mely visszatért a kártya nevével.
+	 * @return name - A kártya neve.
+	 */
+	public String getName() {
 		return name;
 	}
 
-	 public int getValue() {
+	/**
+	 * Getter metódus, mely visszatért a kártya értékével.
+	 * @return value - A kártya értéke.
+	 */
+	public int getValue() {
 		return value;
 	}
 
-	 public void setColor(String color) {
+	/**
+	 * Setter metódus, mely beállítja a kártya színét.
+	 * @param color A beállitandó szín.
+	 */
+	public void setColor(String color) {
 		this.color = color;
 	}
 
+	/**
+	 * Setter metódus, mely beállítja a kártya nevét.
+	 * @param name A beállitandó név.
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Setter metódus, mely beállítja a kártya értékét.
+	 * @param value A beállitandó érték.
+	 */
 	public void setValue(int value) {
 		this.value = value;
 	}

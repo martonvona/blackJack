@@ -24,12 +24,40 @@ package dao;
 
 
 import java.sql.Connection;
-
+/**
+ * 
+ * Interfész a felhasználóval kapcsolatos adatbázis műveletekhez.
+ *
+ */
 public interface UserLoginDAO {
-
+	/**
+	 * A metódus létrehozza a kapcsolatot az adatbázissal.
+	 * @return kapcsolat
+	 */
 	public Connection connectToDatabase();
+	/**
+	 * A metódus viszatér egy fehasználóval a paraméterként megadott felhasználói azonosító és jelszó alapján.
+	 * @param connection A kapcsolat.
+	 * @param username A felhasználói azonosító.
+	 * @param password A felhasználó jelszava.
+	 * @return A felhasználó.
+	 */
 	public User selectUser(Connection connection, String username, String password);
+	/**
+	 * A metódus frissíti a felhasználó egyenlegét az adatbázisban.
+	 * @param connection A kapcsolat.
+	 * @param username A felhasználói azonosító.
+	 * @param money Az új egyenleg.
+	 * @return Igaz, ha az egyenleg jóváírása sikeresen megtörtént.
+	 */
 	public boolean updateUser(Connection connection, String username, double money);
+	/**
+	 * A metódus létrehoz egy új felhasználót.
+	 * @param connection A kapcsolat.
+	 * @param username A felhasználói azonosító.
+	 * @param password A felhasználó jelszava.
+	 * @return Felhasználó.
+	 */
 	public User insertUser(Connection connection, String username, String password);
 
 }

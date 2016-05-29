@@ -26,53 +26,99 @@ package bjmaven;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 
+ * A játékost reprezentáló osztály.
+ *
+ */
 public class Player {
-
+	
+	/**
+	 * A játékos kezei kezei. (Amíg nem splitel a játkos csak egy keze van)
+	 */
 	private List<Hand> hands = new ArrayList<Hand>();
+	/**
+	 * A játékos pénze.
+	 */
 	private double money = 0;
+	/**
+	 * A játékos egy körben meg tett tétje.
+	 */
 	private double bet;
 
 
-
+	/**
+	 * Konstruktor, mely létrehoz egy kezet a játékosnak.
+	 */
 	public Player(){
 		hands.add(new Hand());
 	}
 
+	/**
+	 * A metódus a játékos adott keznek oszt egy lapot.
+	 * @param card az osztott lap.
+	 * @param handIndex annak a kéznek az indexe ami a lapot kapja.
+	 */
 	public void addCardToHand(Card card, int handIndex){
 		hands.get(handIndex-1).addCard(card);
 	}
-
+	
+	/**
+	 * A metódus egy újabb kezet ad a játékosnak.
+	 * @param hand 
+	 */
 	public void addHand(Hand hand){
 		this.hands.add(hand);
 	}
-
+	/**
+	 * A metódus megmondja, hogy a játékos hán kézzel játszik.
+	 * @return A kezek száma.
+	 */
 	public int handsNumber(){
 		return hands.size();
 	}
-
+	
+	/**
+	 * Metódus amely visszaadja a játékosnak az adott indexű kezét.
+	 * @param handIndex hanyadik kéz.
+	 * @return A játékos egyik keze.
+	 */
 	public Hand getHand(int handIndex){
 		return hands.get(handIndex-1);
 	}
-
+	
+	/**
+	 * Getter metódus, mely megmondja, hogy mennyi pénze van a játékosnak.
+	 * @return A játékos pénze.
+	 */
 	public double getMoney() {
 		return money;
 	}
-
+	/**
+	 * Getter metódus, mely meg mondja, hogy mekkora téttel játszik a játékos.
+	 * @return tét
+	 */
 	public double getBet() {
 		return bet;
 	}
 
-
-
+	/**
+	 * A metódus a paraméterként átadott pénz összeget jóváírja a játékos számláján.
+	 * @param money A jóváírni kívánt összeg.
+	 */
 	public void setMoney(double money) {
 		this.money += money;
 	}
-
+	/**
+	 * Setter metódus, mely beállítja, hogy a játékos mekkora téttel játszik.
+	 * @param bet A megrakott tét.
+	 */
 	public void setBet(double bet) {
 		this.bet = bet;
 	}
-
+	/**
+	 * A metódus elveszi a játékos lapjait. És alapértlemeztt értékre állítja a a játékos kezét.
+	 */
 	public void clearHand(){
 		hands.clear();
 		hands.add(new Hand());

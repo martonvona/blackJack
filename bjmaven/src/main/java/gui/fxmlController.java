@@ -45,6 +45,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * A black jack asztal irányításáért felelős osztály.
+ * 
+ * 
+ * @author Vona Márton
+ *
+ */
 public class FxmlController {
 
 	private GameController gc = new GameController();

@@ -22,15 +22,27 @@ package dao;
  * #L%
  */
 
-
+/**
+ * 
+ * Felhasznló kezelést végző osztály.
+ *
+ */
 public class UserHandler {
-
+	/**
+	 * A bejelentkezett felhasználó.
+	 */
 	static User user;
-
+	/**
+	 * Getter metódus, mely visszadja a bejelentkezett felhasználót.
+	 * @return A felhasználó.
+	 */
 	public static User getUser() {
 		return user;
 	}
-
+	/**
+	 * Setter metódus, mely beállítja a bejelentkezett felhasználót.
+	 * @param user A bejelntkezni kivánt felhasználó.
+	 */
 	public static void setUser(User user) {
 		UserHandler.user = user;
 	}
