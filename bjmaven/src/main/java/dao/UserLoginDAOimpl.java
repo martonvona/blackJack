@@ -206,7 +206,7 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 	}
 	
 	/**
-	 * A metódus a megadott jelszót md5 algorítmus segítségével kódolja  és visszatér a kódolt jelszóval
+	 * A metódus a megadott jelszót md5 algorítmus segítségével kódolja  és visszatér a kódolt jelszóval.
 	 * @param password A kódolni kívánt jelszó.
 	 * @return A titkosított jelszó.
 	 */
