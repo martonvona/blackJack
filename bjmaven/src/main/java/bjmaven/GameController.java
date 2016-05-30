@@ -89,7 +89,7 @@ public class GameController {
 	}
 
 	/**
-	 * A metódus kiszámolja mennyit nyer a játékos adot tét mellet adot kézzel
+	 * A metódus kiszámolja mennyit nyer a játékos adot tét mellet adot kézzel.
 	 * @param bet A tét.
 	 * @param handIndex A kéz indexe.
 	 * @return A nyeremény összege. (Vesztesége setén negatív.)
@@ -294,7 +294,7 @@ public class GameController {
 		return table;
 	}
 	/**
-	 * A játékos lapot kér
+	 * A játékos lapot kér.
 	 * @param handIndex Kézindex.
 	 */
 	public void hit(int handIndex){
