@@ -28,7 +28,7 @@ import java.util.Stack;
 
 /**
  * 
- * A egy 52 lapos francia kártya paklit reprezentáló osztály
+ * A egy 52 lapos francia kártya paklit reprezentáló osztály.
  *
  */
 public class Deck {
@@ -69,7 +69,7 @@ public class Deck {
 
 	/**
 	 * Getter metódus, mely visszatér a paklival.
-	 * @return pakli
+	 * @return pakli.
 	 */
 	public Stack<Card> getDeck() {
 		return deck;
