@@ -26,7 +26,7 @@ package bjmaven;
 import junit.framework.Assert;
 import org.junit.Test;
 
-public class testCanPlayerSplit {
+public class TestCanPlayerSplit {
 	
 	GameController gc = new GameController();
 	

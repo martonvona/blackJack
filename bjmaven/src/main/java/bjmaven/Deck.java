@@ -34,7 +34,7 @@ import java.util.Stack;
 public class Deck {
 
 	/**
-	 * A pakli
+	 * A pakli.
 	 */
 	private Stack<Card> deck = new Stack<Card>();
 	/**

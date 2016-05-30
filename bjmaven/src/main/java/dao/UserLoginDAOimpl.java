@@ -10,12 +10,12 @@ package dao;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -32,12 +32,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import gui.HandDrawer;
+
 /**
- * 
+ *
  * A felhasználóval kapcsolatos adatbázisműveletket megvalósító oosztály hsqldb esetén.
  *
  */
 public class UserLoginDAOimpl implements UserLoginDAO{
+	/**
+	 * Loggolást végző osztály példány.
+	 */
+	private static Logger logger = LoggerFactory.getLogger(UserLoginDAOimpl.class);
 	/**
 	 * {@inheritDoc}
 	 */
@@ -56,22 +65,21 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 			connection = DriverManager.getConnection(dbURL, username, password);
 
 			if(connection != null)
-				System.out.println("A kapcsolodas sikeres.");
+				logger.info("Sikeres kapcsolodas az adatbazishoz.");
 
 			return connection;
 
 		} catch (SQLException e) {
-			System.out.println(e.getErrorCode());
-			System.out.println(e.getMessage());
-			System.out.println(e.getSQLState());
-
+			logger.error("A kapcsolódás sikertelen");
+			logger.error(e.getMessage());
+			logger.error(e.getSQLState());
 			return null;
 		}
 
 
 
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -93,8 +101,7 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 
 
 			if(!rs.next()){
-
-				System.out.println("nem letezo felhasznalo, kerem regisztraljon");
+				logger.info("Nem letezo felhasznalo, kerem regisztraljon!");
 				prstm.close();
 				return null;
 
@@ -113,7 +120,7 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 					return user;
 
 				}else{
-					System.out.println("Helytelen jelszo");
+					logger.info("Helytelen jelszó!");
 					prstm.close();
 					return null;
 				}
@@ -122,9 +129,8 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 			}
 
 		} catch (SQLException e) {
-			System.out.println(e.getErrorCode());
-			System.out.println(e.getMessage());
-			System.out.println(e.getSQLState());
+			logger.error(e.getMessage());
+			logger.error(e.getSQLState());
 			return null;
 		}
 	}
@@ -145,16 +151,16 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 
 			prstm.executeUpdate();
 
-
+			logger.info("A felhasznaló adatainak frissitese");
 			prstm.close();
 
 			return true;
 
 
 		} catch (SQLException e) {
-			System.out.println(e.getErrorCode());
-			System.out.println(e.getMessage());
-			System.out.println(e.getSQLState());
+			logger.error("A felhasznaló adatainak frissitese közben hiba lepett fel!");
+			logger.error(e.getMessage());
+			logger.error(e.getSQLState());
 			return false;
 		}
 	}
@@ -191,6 +197,7 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 			if (rowsInserted > 0) {
 				System.out.println("A new user was inserted successfully!");
 				statement.close();
+				logger.info("Új felhasznaló regisztralva");
 				return new User(username, password, 1000.0);
 			} else {
 				statement.close();
@@ -198,13 +205,13 @@ public class UserLoginDAOimpl implements UserLoginDAO{
 			}
 
 		} catch (SQLException e) {
-			System.out.println(e.getErrorCode());
-			System.out.println(e.getMessage());
-			System.out.println(e.getSQLState());
+			logger.error("A felhasznaló regisztalasa kozben hiba lepett fel!");
+			logger.error(e.getMessage());
+			logger.error(e.getSQLState());
 			return null;
 		}
 	}
-	
+
 	/**
 	 * A metódus a megadott jelszót md5 algorítmus segítségével kódolja  és visszatér a kódolt jelszóval.
 	 * @param password A kódolni kívánt jelszó.
