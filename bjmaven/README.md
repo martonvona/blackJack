@@ -7,7 +7,6 @@ Programozási technloógiák és Programozási környeztek
 ####Rendszer követelmények:
 - maven 3.x
 - jdk 1.8.0_77 
-- hsqldb 2.3.3 ([ >letöltés< ](https://sourceforge.net/projects/hsqldb/files/hsqldb/hsqldb_2_3/hsqldb-2.3.3.zip/download))
 
 ####Futtatás:
 
