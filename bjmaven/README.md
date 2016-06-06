@@ -16,9 +16,9 @@ Fordítás
 
         > mvn package
 
-- **2.lépés:** A hsqldb adatbázis szerver futtatása (a parancsot a hsqldb könyvtárban kell kiadni)
+- **2.lépés:** A hsqldb adatbázis szerver futtatása
 
-        > java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:hsqldb/bjmaven --dbname.0 userdb
+        > mvn exec:java
 
 - **3.lépés:** A jaték indítása 
 
